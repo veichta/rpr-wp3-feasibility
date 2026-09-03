@@ -53,7 +53,7 @@ which costs efficiency; production global batches are multiples of 3 x #GPUs.
 
 | #GPUs | nodes | micro x accum | s/step | samples/s | efficiency | SLURM job | GSSR PDF |
 | ----- | ----- | ------------- | ------ | --------- | ---------- | --------- | -------- |
-| 4     | 1     | 3 x 4         | TODO   | TODO      | 100 %      | 3277872   | TODO     |
+| 4 | 1 | 3 x 4 | 3.333 (std 0.287, 1000 steps) | 14.40 | 100 % | 3277872 | runs/long_4gpu_3277872/gssr_3277872.pdf: GPU util 66 %, FP 0.17, 373 W |
 | 8     | 2     | 3 x 2         | TODO   | TODO      | TODO       | TODO      | TODO     |
 | 12    | 3     | 2 x 2         | TODO   | TODO      | TODO       | TODO      | TODO     |
 | 16    | 4     | 3 x 1         | TODO   | TODO      | TODO       | TODO      | TODO     |

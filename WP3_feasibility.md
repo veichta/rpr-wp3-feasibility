@@ -10,11 +10,11 @@ Workload = GAM training (the production stack of WP3: DA3-Giant geometric founda
 at block 13, 12-layer causal future predictor, action head; 1.4B parameters, 983M trainable in the
 paper config, 1033M with the depth head unfrozen as in the LIBERO config).
 
-| Work package [deps] | Target scale (#GPUs/job) | #runs, #concurrent | Data target | Benchmarked? / diff to prod / data ready? | Avg throughput [strong-scaling eff.] | Run duration, WP duration | GPUh |
-|---|---|---|---|---|---|---|---|
-| WP3.1 multi-horizon future-geometry prediction [WP1 data, WP2 checkpoint] | 64 (TODO: 64 or 128) | TODO | TODO samples (= trajectories x windows) | yes (4-16 GPU) / prod uses 3 views + longer horizon (TODO measure) / LIBERO+OXE public, WP1 conversion for the rest | TODO samples/s [TODO %] | TODO | 0.22 G = 1.01M target |
-| WP3.2 counterfactual prediction + uncertainty [3.1] | TODO | TODO | TODO | same stack, K candidate action chunks per sample (TODO measure K=4) | TODO | TODO | TODO |
-| WP3.3 predictive supervision for planning [3.1, 3.2] | TODO | TODO | TODO rollouts | inference workload, same container (TODO measure) | TODO | TODO | TODO |
+| Work package [deps]                                                       | Target scale (#GPUs/job) | #runs, #concurrent | Data target                             | Benchmarked? / diff to prod / data ready?                                                                           | Avg throughput [strong-scaling eff.] | Run duration, WP duration | GPUh                  |
+| ------------------------------------------------------------------------- | ------------------------ | ------------------ | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------- | --------------------- |
+| WP3.1 multi-horizon future-geometry prediction [WP1 data, WP2 checkpoint] | 64 (TODO: 64 or 128)     | TODO               | TODO samples (= trajectories x windows) | yes (4-16 GPU) / prod uses 3 views + longer horizon (TODO measure) / LIBERO+OXE public, WP1 conversion for the rest | TODO samples/s [TODO %]              | TODO                      | 0.22 G = 1.01M target |
+| WP3.2 counterfactual prediction + uncertainty [3.1]                       | TODO                     | TODO               | TODO                                    | same stack, K candidate action chunks per sample (TODO measure K=4)                                                 | TODO                                 | TODO                      | TODO                  |
+| WP3.3 predictive supervision for planning [3.1, 3.2]                      | TODO                     | TODO               | TODO rollouts                           | inference workload, same container (TODO measure)                                                                   | TODO                                 | TODO                      | TODO                  |
 
 Budget formula per job: GPUh = samples_target / (samples_per_s_per_GPU x 3600) / eff + 5 % restarts.
 
@@ -38,12 +38,12 @@ the action/proprio tokens through the predictor, plus the predicted future frame
 
 ### Strong scaling, first series (150-200 steps, one-decimal s/step)
 
-| #GPUs | nodes | micro x accum | s/step (mean, steps 20+) | samples/s | samples/s/GPU | efficiency | SLURM job | log |
-|---|---|---|---|---|---|---|---|---|
-| 4 | 1 | 3 x 4 | 3.22 | 14.9 | 3.73 | 100 % | 3277344 | runs/ddp_4gpu_3277344 |
-| 8 | 2 | 3 x 2 | 1.64 | 29.2 | 3.66 | 98 % | 3277415 | runs/ddp_8gpu_3277415 |
-| 12 | 3 | 2 x 2 | 1.26 | 38.2 | 3.18 | 85 % | 3277469 | runs/ddp_12gpu_3277469 |
-| 16 | 4 | 3 x 1 | 0.72 | 66.6 | 4.16 | 112 % (rounding) | 3277556 | runs/ddp_16gpu_3277556 |
+| #GPUs | nodes | micro x accum | s/step (mean, steps 20+) | samples/s | samples/s/GPU | efficiency       | SLURM job | log                    |
+| ----- | ----- | ------------- | ------------------------ | --------- | ------------- | ---------------- | --------- | ---------------------- |
+| 4     | 1     | 3 x 4         | 3.22                     | 14.9      | 3.73          | 100 %            | 3277344   | runs/ddp_4gpu_3277344  |
+| 8     | 2     | 3 x 2         | 1.64                     | 29.2      | 3.66          | 98 %             | 3277415   | runs/ddp_8gpu_3277415  |
+| 12    | 3     | 2 x 2         | 1.26                     | 38.2      | 3.18          | 85 %             | 3277469   | runs/ddp_12gpu_3277469 |
+| 16    | 4     | 3 x 1         | 0.72                     | 66.6      | 4.16          | 112 % (rounding) | 3277556   | runs/ddp_16gpu_3277556 |
 
 Data-loader wait logged as 0.00 s at every sampled batch on 4, 12 and 16 GPUs (jobs 3277709,
 3277469, 3277556): the input side is not limiting. The 12-GPU point runs micro-batch 2 (48 / 12),
@@ -52,11 +52,11 @@ which costs efficiency; production global batches are multiples of 3 x #GPUs.
 ### Strong scaling, submission series (>= 15 min training per point, three-decimal s/step)
 
 | #GPUs | nodes | micro x accum | s/step | samples/s | efficiency | SLURM job | GSSR PDF |
-|---|---|---|---|---|---|---|---|
-| 4 | 1 | 3 x 4 | TODO | TODO | 100 % | 3277872 | TODO |
-| 8 | 2 | 3 x 2 | TODO | TODO | TODO | TODO | TODO |
-| 12 | 3 | 2 x 2 | TODO | TODO | TODO | TODO | TODO |
-| 16 | 4 | 3 x 1 | TODO | TODO | TODO | TODO | TODO |
+| ----- | ----- | ------------- | ------ | --------- | ---------- | --------- | -------- |
+| 4     | 1     | 3 x 4         | TODO   | TODO      | 100 %      | 3277872   | TODO     |
+| 8     | 2     | 3 x 2         | TODO   | TODO      | TODO       | TODO      | TODO     |
+| 12    | 3     | 2 x 2         | TODO   | TODO      | TODO       | TODO      | TODO     |
+| 16    | 4     | 3 x 1         | TODO   | TODO      | TODO       | TODO      | TODO     |
 
 Beyond 16 GPUs (debug partition ceiling) requires the `normal` partition: TODO 32/64 GPU points
 if the queue allows before submission; otherwise state the 16-GPU measurement and the DDP
@@ -91,17 +91,17 @@ Runtime: Container Engine EDF `env/gam.toml` = `nvcr.io#nvidia/pytorch:25.03-py3
 torch 2.7, Python 3.12) + venv `env/gam-venv` (build script `scripts/build_env.sh`, freeze
 `env/gam-venv-freeze.txt`). Hooks: aws-ofi-nccl (cuda12), DCGM (for GSSR).
 
-| Component (repo, version) | Purpose | Ready? | Features / customizations |
-|---|---|---|---|
-| GAM (`cvlab-kaist/Geometric-Action-Model` @ 58bb91e) | training + inference code | yes | DDP via torchrun; DeepSpeed ZeRO-2 optional; one-line patch: `s/step` printed with 3 decimals |
-| Depth-Anything-3 (`ByteDance-Seed/Depth-Anything-3` @ 2c21ea8) | DA3-Giant backbone source | yes | source on `PYTHONPATH`, no install; optional deps stubbed by GAM |
-| Track4World DA3-Giant checkpoint (`SeonghuJeon/3da-libero-training-assets`) | backbone init, 5.5 GB | yes | |
-| PyTorch 2.7 (NGC 25.03) | framework, flex_attention, torch.compile | yes | bf16 autocast, TF32 matmul |
-| NCCL (NGC) + aws-ofi-nccl hook | multi-node collectives | yes | CSCS defaults (`FI_CXI_DISABLE_HOST_REGISTER`, `FI_MR_CACHE_MONITOR`) |
-| transformers 5.5.4, timm 1.0.26, h5py 3.16, omegaconf 2.3 | CLIP text encoder, data, config | yes | HF offline, local CLIP folder |
-| deepspeed 0.18.8 | ZeRO-2 alternative | installed, untested on aarch64 | TODO one run with `DS=1` |
-| GSSR (`eth-cscs/GPU-Saturation-Scorer` 2.0) | GPU metrics + PDF | yes | built on login node, runs in container |
-| WP1 data converters (LeRobot -> GAM pretraining loader) | production data | partial | GAM ships the OXE/MimicGen/RoboCasa loaders; consortium data TODO (WP1 timeline) |
+| Component (repo, version)                                                   | Purpose                                  | Ready?                         | Features / customizations                                                                     |
+| --------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
+| GAM (`cvlab-kaist/Geometric-Action-Model` @ 58bb91e)                        | training + inference code                | yes                            | DDP via torchrun; DeepSpeed ZeRO-2 optional; one-line patch: `s/step` printed with 3 decimals |
+| Depth-Anything-3 (`ByteDance-Seed/Depth-Anything-3` @ 2c21ea8)              | DA3-Giant backbone source                | yes                            | source on `PYTHONPATH`, no install; optional deps stubbed by GAM                              |
+| Track4World DA3-Giant checkpoint (`SeonghuJeon/3da-libero-training-assets`) | backbone init, 5.5 GB                    | yes                            |                                                                                               |
+| PyTorch 2.7 (NGC 25.03)                                                     | framework, flex_attention, torch.compile | yes                            | bf16 autocast, TF32 matmul                                                                    |
+| NCCL (NGC) + aws-ofi-nccl hook                                              | multi-node collectives                   | yes                            | CSCS defaults (`FI_CXI_DISABLE_HOST_REGISTER`, `FI_MR_CACHE_MONITOR`)                         |
+| transformers 5.5.4, timm 1.0.26, h5py 3.16, omegaconf 2.3                   | CLIP text encoder, data, config          | yes                            | HF offline, local CLIP folder                                                                 |
+| deepspeed 0.18.8                                                            | ZeRO-2 alternative                       | installed, untested on aarch64 | TODO one run with `DS=1`                                                                      |
+| GSSR (`eth-cscs/GPU-Saturation-Scorer` 2.0)                                 | GPU metrics + PDF                        | yes                            | built on login node, runs in container                                                        |
+| WP1 data converters (LeRobot -> GAM pretraining loader)                     | production data                          | partial                        | GAM ships the OXE/MimicGen/RoboCasa loaders; consortium data TODO (WP1 timeline)              |
 
 ## Open decisions (need Philipp / Marc)
 

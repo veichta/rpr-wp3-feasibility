@@ -1,0 +1,112 @@
+# WP3.1 production-shape config for the feasibility measurements (2026-09-03).
+# Derived from GAM's paper config configs/training/libero_unified/gam/chunk8_150k_2node.yaml.
+# Contract: 3 views x 16 anchors at DA3's native 518 px, language + proprio + action-history
+# conditioning, future geometric tokens decoded to depth / ray / point maps, whole model trainable.
+# Probe stand-ins (compute-neutral, smoke data only): third view = external camera repeated;
+# anchor spacing 4 frames (chunk_size 4) because the 98-frame smoke demo cannot host 16 anchors at 8.
+# Micro-batch 1 (memory ceiling at 518 px); accumulation is set per node count by gam_scale.sbatch.
+
+stage_1:
+  ckpt_path: "${oc.env:DA3_ROOT,.}/checkpoints/track4world_da3.pth"
+  encoder_input_size: 518
+  normalization_stat_path: null
+
+da3_finetune:
+  enabled: true
+  freeze_blocks_before: 0          # full fine-tune (paper: 13 = encoder frozen)
+  n_action_steps: 16               # = dataset.future_steps + 1
+  n_views: 3
+  use_temporal_embed: false
+  action_input_rate: 0.4
+
+action_head:
+  type: "mlp_resnet"
+  input_dim: 1536
+  hidden_dim: 1536
+  n_dims: 7
+  chunk_size: 4                    # probe stand-in, production 8
+  chunk_position_encoding: "learned"
+  num_blocks: 2
+  pool_mode: "mean"
+
+regularization:
+  lambda_feat: 0.0
+  layer_weight_min: 0.5
+  adaptive_lambda: false
+  depth_loss_type: "da3_full"      # depth + ray + point-map losses (paper: da3_style = depth only)
+  lambda_depth: 0.05
+  lambda_ray: 1.0
+  lambda_point: 1.0
+  depth_grad_weight: 1.0
+  depth_decode_chunk_size: 16      # batched DPT decode (paper: 1)
+  lambda_camera: 0.0
+
+proprioception:
+  proprio_dim: 7
+
+predictor:
+  enabled: true
+  type: "gam"
+  d_model: 1024
+  depth: 12
+  num_heads: 16
+  ffn_ratio: 4.0
+  dropout: 0.0
+  num_patches_per_view: 1369       # (518 / 14)^2
+  use_language: true
+  language_dim: 768
+  language_len: 77
+  clip_model: "${oc.env:CLIP,openai/clip-vit-large-patch14}"
+  lambda_feat_future: 1.0
+  lambda_sigreg: 0.0
+  H_choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  H_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  num_register_tokens: 0
+  deep_gradient_checkpointing: true
+
+training:
+  global_batch_size: 16            # overridden per node count by gam_scale.sbatch
+  micro_batch_size: 1
+  grad_accum_steps: 4              # overridden per node count by gam_scale.sbatch
+  base_lr: 5.0e-5
+  head_lr_mult: 10.0
+  predictor_lr_mult: 0.2
+  adam_eps: 1.0e-6
+  weight_decay: 0.0
+  lambda_action: 3.0
+  epochs: 500000
+  clip_grad: 1.0
+  warmup_steps: 500
+  max_steps: 60                    # overridden by STEPS
+  min_lr_ratio: 0.01
+  log_every: 10
+  ckpt_every: 999999
+  vis_every: 999999
+  eval_every: 999999
+  global_seed: 42
+  num_workers: 4
+  bf16: true
+  compile: true
+  min_train_batches_per_epoch: 200 # virtual epoch over the one-demo smoke file
+
+dataset:
+  type: "libero_hdf5"
+  hdf5_root: "${oc.env:DA3_ROOT,.}/data/libero_noop"
+  stats_dir: "${oc.env:DA3_ROOT,.}/data/libero_noop/_stats"
+  image_size: [518, 518]
+  future_steps: 15                 # 16 anchors
+  chunk_size: 4                    # probe stand-in, production 8
+  include_current_action: true
+  eval_ratio: 0.0                  # the smoke file has one demo
+  proprio_dim: 7
+  n_views: 3
+  source_fps: 20
+  da3_input_rotate180: true
+  da3_input_vflip: false
+  gt_depth_root: null
+  gt_depth_require_geometry: true
+  action_stats_samples: 10000
+  proprio_stats_samples: 10000
+  camera_keys: ["agentview_rgb", "eye_in_hand_rgb", "agentview_rgb"]   # probe stand-in for a 3rd camera
+
+use_dit: false

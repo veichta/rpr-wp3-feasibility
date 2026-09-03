@@ -38,3 +38,13 @@ $SRUN bash -c "
     --set training.global_batch_size=48 --set training.micro_batch_size=$MICRO --set training.grad_accum_steps=$ACCUM \
     --set dataset.eval_ratio=0 --set training.min_train_batches_per_epoch=200 --set predictor.clip_model=$CLIP ${EXTRA:-}
 "
+
+# GSSR PDFs for this run and any earlier run still lacking one (gssr-analyze needs the container venv).
+$SRUN --ntasks=1 --nodes=1 bash -c "
+  source $R/env/gam-venv/bin/activate
+  for d in $R/runs/*/gssr_report; do
+    run=\$(dirname \$d); jid=\${run##*_}
+    [ -f \$run/gssr_\$jid.pdf ] && continue
+    GSSR_UV_ACTIVE=1 python $R/tools/gssr/gssr-analyze \$d -o \$run/gssr_\$jid.pdf && echo \"pdf \$run/gssr_\$jid.pdf\"
+  done
+"

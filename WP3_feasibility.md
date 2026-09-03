@@ -51,12 +51,12 @@ which costs efficiency; production global batches are multiples of 3 x #GPUs.
 
 ### Strong scaling, submission series (>= 15 min training per point, three-decimal s/step)
 
-| #GPUs | nodes | micro x accum | s/step | samples/s | efficiency | SLURM job | GSSR PDF |
-| ----- | ----- | ------------- | ------ | --------- | ---------- | --------- | -------- |
-| 4 | 1 | 3 x 4 | 3.333 (std 0.287, 1000 steps) | 14.40 | 100 % | 3277872 | runs/long_4gpu_3277872/gssr_3277872.pdf: GPU util 66 %, FP 0.17, 373 W |
-| 8 | 2 | 3 x 2 | 1.657 (std 0.195, 1200 steps) | 28.97 | 101 % | 3277945 | runs/long_8gpu_3277945/gssr_3277945.pdf |
-| 12 | 3 | 2 x 2 | 1.282 (std 0.116, 1071 steps; one 121 s loader stall at an epoch boundary excluded) | 37.4 | 87 % | 3278593 | runs/long_12gpu_3278593/gssr_3278593.pdf |
-| 16 | 4 | 3 x 1 | 0.868 (std 0.144, 1220 steps) | 55.3 | 96 % | 3279116 | runs/long_16gpu_3279116/gssr_3279116.pdf |
+| #GPUs | nodes | micro x accum | s/step                                                                              | samples/s | efficiency | SLURM job | GSSR PDF                                                               |
+| ----- | ----- | ------------- | ----------------------------------------------------------------------------------- | --------- | ---------- | --------- | ---------------------------------------------------------------------- |
+| 4     | 1     | 3 x 4         | 3.333 (std 0.287, 1000 steps)                                                       | 14.40     | 100 %      | 3277872   | runs/long_4gpu_3277872/gssr_3277872.pdf: GPU util 66 %, FP 0.17, 373 W |
+| 8     | 2     | 3 x 2         | 1.657 (std 0.195, 1200 steps)                                                       | 28.97     | 101 %      | 3277945   | runs/long_8gpu_3277945/gssr_3277945.pdf                                |
+| 12    | 3     | 2 x 2         | 1.282 (std 0.116, 1071 steps; one 121 s loader stall at an epoch boundary excluded) | 37.4      | 87 %       | 3278593   | runs/long_12gpu_3278593/gssr_3278593.pdf                               |
+| 16    | 4     | 3 x 1         | 0.868 (std 0.144, 1220 steps)                                                       | 55.3      | 96 %       | 3279116   | runs/long_16gpu_3279116/gssr_3279116.pdf                               |
 
 Launcher check: DeepSpeed ZeRO-2 (job 3279461, same micro 3 x accum 4 on 4 GPUs) reaches 12.1 samples/s vs 14.4 for DDP (84 %); ZeRO-2 only adds sharding traffic for a model whose optimizer state already fits, so DDP is the production launcher.
 
@@ -72,18 +72,18 @@ DCGM CSVs in `runs/<run>/gssr_report/`. Logs and job scripts: TODO copy to
 
 ### Production-shape probes (4 GPUs, 2026-09-03 afternoon)
 
-| setting | visual tokens/sample | samples/s/GPU | GB/GPU | GPU Util | FP Util | job |
-|---|---|---|---|---|---|---|
-| paper config, frozen encoder, DDP micro 3 | 4,096 | 3.60 | 90 | 66 % acceptable | 0.17 acceptable | 3277872 |
-| full fine-tune, ZeRO-2 micro 1, 224 | 4,096 | 1.93 | 29 | 43 % improve | 0.03 poor | 3279908 |
-| full fine-tune, ZeRO-2 micro 1, 448 | 16,384 | 1.00 | 71 | 75-79 % good | 0.11-0.12 improve | 3280114 |
-| full fine-tune, ZeRO-2 micro 1, 518 | 21,904 | 0.72 | 90 | 77-80 % good | 0.12-0.13 improve/acceptable | 3280203 |
-| contract 224: 3 views x 16 anchors, full FT, da3_style loss, deep ckpt, micro 1 | 12,288 | 0.67 | 27 | 58-61 % acceptable | 0.07-0.08 improve | 3280385 |
-| contract 518: 3 views x 16 anchors, full FT, da3_full loss (depth+ray+point), deep ckpt, micro 1, no accumulation | 65,712 | 0.105 | 80 | 82-85 % good | 0.16-0.17 acceptable | 3280628 |
-| contract 518, accumulation 4 | 65,712 | 0.106 | 81 | 83-86 % good | 0.16-0.17 acceptable | 3280912 |
-| contract 518, accumulation 4, batched depth decode (16) + torch.compile | 65,712 | 0.109 | 83 | 86-88 % good | 0.18-0.19 acceptable | 3281016 |
-| contract 518 with H fixed to 15 on every rank (no per-rank load imbalance) | 65,712 | 0.085 | 89 | 82-85 % good | 0.34-0.35 good | 3281372 |
-| **contract 448** (pi0.7 operating point; native for 480p sources), H=15, same otherwise | 49,152 | 0.140 | 70 | 85-88 % good | 0.37-0.39 good | 3282051 |
+| setting                                                                                                           | visual tokens/sample | samples/s/GPU | GB/GPU | GPU Util           | FP Util                      | job     |
+| ----------------------------------------------------------------------------------------------------------------- | -------------------- | ------------- | ------ | ------------------ | ---------------------------- | ------- |
+| paper config, frozen encoder, DDP micro 3                                                                         | 4,096                | 3.60          | 90     | 66 % acceptable    | 0.17 acceptable              | 3277872 |
+| full fine-tune, ZeRO-2 micro 1, 224                                                                               | 4,096                | 1.93          | 29     | 43 % improve       | 0.03 poor                    | 3279908 |
+| full fine-tune, ZeRO-2 micro 1, 448                                                                               | 16,384               | 1.00          | 71     | 75-79 % good       | 0.11-0.12 improve            | 3280114 |
+| full fine-tune, ZeRO-2 micro 1, 518                                                                               | 21,904               | 0.72          | 90     | 77-80 % good       | 0.12-0.13 improve/acceptable | 3280203 |
+| contract 224: 3 views x 16 anchors, full FT, da3_style loss, deep ckpt, micro 1                                   | 12,288               | 0.67          | 27     | 58-61 % acceptable | 0.07-0.08 improve            | 3280385 |
+| contract 518: 3 views x 16 anchors, full FT, da3_full loss (depth+ray+point), deep ckpt, micro 1, no accumulation | 65,712               | 0.105         | 80     | 82-85 % good       | 0.16-0.17 acceptable         | 3280628 |
+| contract 518, accumulation 4                                                                                      | 65,712               | 0.106         | 81     | 83-86 % good       | 0.16-0.17 acceptable         | 3280912 |
+| contract 518, accumulation 4, batched depth decode (16) + torch.compile                                           | 65,712               | 0.109         | 83     | 86-88 % good       | 0.18-0.19 acceptable         | 3281016 |
+| contract 518 with H fixed to 15 on every rank (no per-rank load imbalance)                                        | 65,712               | 0.085         | 89     | 82-85 % good       | 0.34-0.35 good               | 3281372 |
+| **contract 448** (pi0.7 operating point; native for 480p sources), H=15, same otherwise                           | 49,152               | 0.140         | 70     | 85-88 % good       | 0.37-0.39 good               | 3282051 |
 
 Profiling (torch.profiler on rank 0, job 3281286) showed that with GAM's per-rank sampling of the
 history length H (1..15) the ranks do unequal work and 49 % of GPU time is spent waiting in NCCL
@@ -95,6 +95,23 @@ losses on, the whole model trainable. Budget at this shape: 1 GPU-h = 378 sample
 = 151M samples (~1.5 epochs over ~100M windows) and 1.0M GPU-h = 378M samples (~3.8 epochs).
 Probe stand-ins (compute-neutral): third view = duplicated external camera, anchor spacing 4 frames
 instead of 8 because the 98-frame smoke demo cannot host 16 anchors at 8.
+
+### Strong scaling, production contract 448 (submission ladder, 2026-09-03 evening)
+
+Global batch 48 held fixed (micro 1 x accumulation 12/6/4/3), 120 optimizer steps per point,
+mean over steps >= 20, ZeRO-2, `configs/wp31_contract_448.yaml`, cached single-demo input.
+
+| #GPUs | nodes | accum | s/sample (std)  | samples/s/GPU | samples/s | efficiency | SLURM job | GSSR (`runs/ladder_<n>gpu_<job>/gssr_<job>.pdf`)                  |
+| ----- | ----- | ----- | --------------- | ------------- | --------- | ---------- | --------- | ----------------------------------------------------------------- |
+| 4     | 1     | 12    | 7.124 (0.014)   | 0.140         | 0.56      | 100 %      | 3283278   | GPU start 93 %, GPU util 92-93 %, FP util 0.41-0.42 (all good), 469 W |
+| 8     | 2     | 6     | 7.140 (0.015)   | 0.140         | 1.12      | 99.8 %     | 3283391   | GPU start 92 %, GPU util 91-92 %, FP util 0.41 (all good), 466 W  |
+| 12    | 3     | 4     | 7.214 (0.032)   | 0.139         | 1.66      | 98.7 %     | 3283394   | GPU start 93 %, GPU util 91-92 %, FP util 0.40 (all good), 468 W  |
+| 16    | 4     | 3     | 7.231 (0.021)   | 0.138         | 2.21      | 98.5 %     | 3283421   | GPU start 93 %, GPU util 91-92 %, FP util 0.40 (all good), 465 W  |
+
+Visual tokens per sample 49,152 -> 6.9k visual tokens/s/GPU at every point. The 16-GPU point runs
+accumulation 3; at 64 GPUs the same global batch needs no accumulation (48 = 64 x 1 would need
+global batch 64, i.e. one micro-batch per GPU), so the ladder measures the communication cost of
+the production layout directly.
 
 ## Data and I/O Requirements (WP3)
 

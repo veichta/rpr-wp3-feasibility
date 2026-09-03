@@ -1,0 +1,14 @@
+# GAM (WP3 feasibility) container: NGC PyTorch 25.03 (aarch64) + DCGM hook for GSSR.
+image = "/capstor/store/cscs/swissai/a0231/veichta/ce-images/ngc-pytorch+25.03.sqsh"
+writable = true
+mounts = ["/capstor", "/iopsstor", "/users"]
+
+[annotations]
+com.hooks.aws_ofi_nccl.enabled = "true"
+com.hooks.aws_ofi_nccl.variant = "cuda12"
+com.hooks.dcgm.enabled = "true"
+
+[env]
+FI_CXI_DISABLE_HOST_REGISTER = "1"
+FI_MR_CACHE_MONITOR = "userfaultfd"
+NVIDIA_DRIVER_CAPABILITIES = "compute,utility"

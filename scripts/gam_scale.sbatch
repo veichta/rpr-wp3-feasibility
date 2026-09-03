@@ -40,11 +40,5 @@ $SRUN bash -c "
 "
 
 # GSSR PDFs for this run and any earlier run still lacking one (gssr-analyze needs the container venv).
-$SRUN --ntasks=1 --nodes=1 bash -c "
-  source $R/env/gam-venv/bin/activate
-  for d in $R/runs/*/gssr_report; do
-    run=\$(dirname \$d); jid=\${run##*_}
-    [ -f \$run/gssr_\$jid.pdf ] && continue
-    GSSR_UV_ACTIVE=1 python $R/tools/gssr/gssr-analyze \$d -o \$run/gssr_\$jid.pdf && echo \"pdf \$run/gssr_\$jid.pdf\"
-  done
-"
+# Plain srun here: $SRUN ends in numactl, which would swallow the --ntasks/--nodes flags.
+srun -A a144 -ul --ntasks=1 --nodes=1 --environment=$R/env/gam.toml --container-workdir=$R/code/gam bash $R/scripts/gssr_pdfs.sh

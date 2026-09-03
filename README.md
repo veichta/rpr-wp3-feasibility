@@ -71,12 +71,16 @@ sbatch -N 4 --export=ALL,TAG=ddp scripts/gam_scale.sbatch      # 16 GPUs (debug 
 
 Paper config (`chunk8_150k_2node.yaml`: DA3-Giant frozen below block 13, 12-layer predictor,
 224 px, 2 views, 8 anchors per sample, 8-step action chunks), global batch fixed at 48 across GPU
-counts, 300 steps, torchrun DDP (add `DS=1` for DeepSpeed ZeRO-2). Throughput is the `s/step`
-field of the training log; each job also leaves a `gssr_report/` for `gssr-analyze`.
+counts, `STEPS` steps (default 300; `-t` and `STEPS` set per run), torchrun DDP (add `DS=1` for
+DeepSpeed ZeRO-2). Throughput is the `s/step` field of the training log (patched to three
+decimals, see `setup.sh`); each job records `gssr_report/` and writes `gssr_<jobid>.pdf` at the
+end (`scripts/gssr_pdfs.sbatch` does the same standalone). `env.sh` turns on GAM's data-loader
+wait logging (rank 0, every 10 steps) and sets GAM's walltime guard to 90 s (default 600 s: it
+stops and checkpoints that long before the SLURM limit). Startup (checkpoint + CLIP load, NCCL
+init) takes ~2-3.5 min before the first step.
 
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
-queued job per user. GAM stops training and checkpoints when 600 s of SLURM walltime remain, so a
-20 min job yields ~6.5 min of steps after the ~3.5 min startup (checkpoint + CLIP load, NCCL init).
+queued job per user.
 
 ## Pull reports to the local mirror
 
@@ -100,8 +104,18 @@ small fraction, and quote the "after" column.
 
 ## Job log
 
-| job     | what                          | result                                                                                                                         |
-| ------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 3276849 | env build                     | FAILED: NGC `PIP_CONSTRAINT` pins regex, transformers 5.5.4 needs newer                                                        |
-| 3276857 | env build + gssr burn + smoke | venv OK, gssr burn OK, smoke failed on `--set` syntax (one `--set` per override)                                               |
-| 3276947 | smoke                         | gssr burn + PDF OK; training failed: `depth_anything_3` not on sys.path (GAM looks under src/); fixed via PYTHONPATH in env.sh |
+| job | what | result |
+|---|---|---|
+| 3276849 | env build | FAILED: NGC `PIP_CONSTRAINT` pins regex, transformers 5.5.4 needs newer |
+| 3276857 | env build + gssr burn + smoke | venv OK, gssr burn OK, smoke failed on `--set` syntax (one `--set` per override) |
+| 3276947 | smoke | gssr burn + PDF OK; training failed: `depth_anything_3` not on sys.path (GAM looks under src/); fixed via PYTHONPATH in env.sh |
+| 3277240 | smoke | model loads (1033.4M trainable params); 0 train samples: the smoke file has ONE demo and `eval_ratio=0.05` reserves it for eval; fixed with `dataset.eval_ratio=0` |
+| 3277295 | smoke | COMPLETED: gssr burn + PDF, 3 single-GPU training steps (first step 10.5 s incl. warmup) |
+| 3277344 | scale 4 GPU, DDP, 200 steps | COMPLETED 11:03 wall: steps 20-140 at 3.0-3.6 s/step, mean 3.22 = 14.9 samples/s (3.73 per GPU); stopped at step 146 by GAM's 600 s walltime guard |
+| 3277415 | scale 8 GPU (2 nodes), 150 steps | COMPLETED 7:03: steps 20-150 at 1.2-2.0 s/step, mean 1.64 = 29.2 samples/s (3.66 per GPU), 98% of linear |
+| 3277469 | scale 12 GPU (3 nodes), 150 steps | training COMPLETED 5:48: steps 20-150 at 1.0-1.5 s/step, mean 1.26 = 38.2 samples/s (3.18 per GPU), 85%; data-loader wait 0.00 s; job FAILED only in the PDF stage (srun flags swallowed by numactl, fixed) |
+| 3277556 | scale 16 GPU (4 nodes), 150 steps | training COMPLETED 4:49: steps 20-150 at 0.6-1.0 s/step, mean 0.72 = 66.6 samples/s (4.16 per GPU), 112% = one-decimal rounding; data-loader wait 0.00 s; same PDF-stage failure |
+| 3277648 | gssr PDFs for the four scaling runs | COMPLETED, PDFs in runs/ddp_*gpu_*/ |
+| 3277709 | scale 4 GPU rerun, data-wait logging, 150 steps | COMPLETED 10:36: 3.2-3.3 s/step, wait 0.00 s at every logged batch -> baseline is compute-bound; PDF in-job |
+| 3277723 | scale 8 GPU rerun, 3-decimal s/step, 150 steps | running |
+| 3277872 | long 4 GPU, 1 node x 60 min, 1000 steps (submission series) | queued |

@@ -82,8 +82,8 @@ ad-hoc `--set` overrides via `EXTRA` (export it in the shell when a value contai
 copies its yaml to `runs/<run>/config.yaml`. Throughput is the `s/step` field of the training log
 (patched to three decimals, see `setup.sh`; on the DeepSpeed path GAM counts micro-batches as steps);
 each job records `gssr_report/` and writes `gssr_<jobid>.pdf` at the end (`scripts/gssr_pdfs.sbatch`
-does the same standalone). `env.sh` turns on GAM's data-loader wait logging and sets GAM's walltime
-guard to 90 s. Startup (checkpoint + CLIP load, NCCL init, compile) takes ~2-4 min before the first step.
+does the same standalone). `env.sh` sets GAM's walltime guard to 90 s; all profiling (phase timer, data-loader wait log,
+torch.profiler) is off unless , because the trace export idles the GPUs for ~40 s. Startup (checkpoint + CLIP load, NCCL init, compile) takes ~2-4 min before the first step.
 
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
 queued job per user. Convention (2026-09-03): every measurement job is 20 min, the longest that fits

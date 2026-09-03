@@ -13,7 +13,7 @@
 #                     [,DS=1][,PROFILE=1][,EXTRA="--set k=v ..."] scripts/gam_scale.sbatch
 #   GLOBAL = global batch held fixed across node counts (strong scaling): accum = GLOBAL / (MICRO * 4 * nodes).
 #   DS=1   = DeepSpeed ZeRO-2 (JSON generated from MICRO/accum); default torchrun DDP.
-#   PROFILE=1 = GAM phase timer every 10 steps + torch.profiler on micro-steps 30-35 (rank 0).
+#   PROFILE=1 = GAM phase timer + data-loader wait log every 10 steps + torch.profiler on micro-steps 30-35 (rank 0); off by default.
 set -eo pipefail
 source ${RPR_WP3_ROOT:-/iopsstor/scratch/cscs/veichta/rpr-wp3}/scripts/env.sh
 CONFIG=${CONFIG:-$R/configs/wp31_contract_518.yaml}
@@ -40,8 +40,11 @@ if [ "${DS:-0}" = "1" ]; then
 EOF
   DSFLAG="--deepspeed_config $OUT/deepspeed.json"
 fi
+# Profiling is opt-in: PROFILE=1 enables GAM's phase timer, the data-loader wait log and a torch.profiler window
+# (the trace export idles the GPUs for ~40 s, so never on for throughput/GSSR runs).
 if [ "${PROFILE:-0}" = "1" ]; then
   export DA3_STEP_PROFILE=1 DA3_STEP_PROFILE_EVERY=10 DA3_TORCH_PROFILE=30:35
+  export DA3_DATALOADER_WAIT_LOG=1 DA3_DATALOADER_WAIT_LOG_EVERY=10 DA3_DATALOADER_WAIT_LOG_RANKS=0
 fi
 cp $CONFIG $OUT/config.yaml
 echo "job $SLURM_JOB_ID nodes $SLURM_NNODES gpus $NGPU micro $MICRO accum $ACCUM global $GLOBAL steps $STEPS config $CONFIG ds ${DS:-0} profile ${PROFILE:-0} extra ${EXTRA:-}"

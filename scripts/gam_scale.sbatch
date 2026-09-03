@@ -23,7 +23,7 @@ case $NGPU in       # micro x accum x gpus = 48
   16) MICRO=3; ACCUM=1 ;;
   *)  echo "unsupported gpu count $NGPU"; exit 1 ;;
 esac
-MICRO=${MICRO_OVERRIDE:-$MICRO}; ACCUM=${ACCUM_OVERRIDE:-$ACCUM}   # e.g. MICRO_OVERRIDE=1 ACCUM_OVERRIDE=12 keeps global 48 on 4 GPUs
+MICRO=${MICRO_OVERRIDE:-$MICRO}; ACCUM=${ACCUM_OVERRIDE:-$ACCUM}; GLOBAL=${GLOBAL_OVERRIDE:-48}   # e.g. MICRO_OVERRIDE=1 ACCUM_OVERRIDE=12 keeps global 48 on 4 GPUs
 OUT=$R/runs/${TAG}_${NGPU}gpu_${SLURM_JOB_ID}; mkdir -p $OUT
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -1)
 export MASTER_PORT=$((29000 + SLURM_JOB_ID % 10000))
@@ -38,7 +38,7 @@ $SRUN bash -c "
     --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT \
     src/train_robot.py --config $CONFIG $DSFLAG --results-dir $OUT/results \
     --set training.max_steps=$STEPS --set training.log_every=10 --set training.ckpt_every=999999 --set training.vis_every=999999 \
-    --set training.global_batch_size=48 --set training.micro_batch_size=$MICRO --set training.grad_accum_steps=$ACCUM \
+    --set training.global_batch_size=$GLOBAL --set training.micro_batch_size=$MICRO --set training.grad_accum_steps=$ACCUM \
     --set dataset.eval_ratio=0 --set training.min_train_batches_per_epoch=200 --set predictor.clip_model=$CLIP ${EXTRA:-}
 "
 

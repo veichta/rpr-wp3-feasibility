@@ -80,6 +80,8 @@ DCGM CSVs in `runs/<run>/gssr_report/`. Logs and job scripts: TODO copy to
 | full fine-tune, ZeRO-2 micro 1, 518 | 21,904 | 0.72 | 90 | 77-80 % good | 0.12-0.13 improve/acceptable | 3280203 |
 | contract 224: 3 views x 16 anchors, full FT, da3_style loss, deep ckpt, micro 1 | 12,288 | 0.67 | 27 | 58-61 % acceptable | 0.07-0.08 improve | 3280385 |
 | contract 518: 3 views x 16 anchors, full FT, da3_full loss (depth+ray+point), deep ckpt, micro 1, no accumulation | 65,712 | 0.105 | 80 | 82-85 % good | 0.16-0.17 acceptable | 3280628 |
+| contract 518, accumulation 4 | 65,712 | 0.106 | 81 | 83-86 % good | 0.16-0.17 acceptable | 3280912 |
+| contract 518, accumulation 4, batched depth decode (16) + torch.compile | 65,712 | 0.109 | 83 | 86-88 % good | 0.18-0.19 acceptable | 3281016 |
 
 The last row is the WP3.1 candidate: native DA3 resolution, three views, 16 horizons, geometry
 losses on, the whole model trainable. Budget at this shape: 1 GPU-h = 378 samples, so 400k GPU-h

@@ -11,5 +11,6 @@ export TORCH_EXTENSIONS_DIR=$R/env/torch_extensions
 export TRITON_CACHE_DIR=$R/env/triton_cache
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export OMP_NUM_THREADS=8
+export DA3_MIN_REMAINING_SEC=90   # GAM walltime guard (default 600 s): stop + checkpoint this long before the SLURM limit
 # srun prefix shared by all jobs: container + DCGM hook, GAM as working dir, NUMA-local host memory.
 export SRUN="srun -A a144 -ul --environment=$R/env/gam.toml --container-workdir=$R/code/gam numactl --membind=0-3"

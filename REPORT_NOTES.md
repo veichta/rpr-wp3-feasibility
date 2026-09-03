@@ -34,7 +34,7 @@ Template table columns: WP [deps] | target #GPUs/job | #runs, #concurrent | data
 diff-to-prod? data ready? | avg throughput [strong-scaling eff %] | run duration, WP duration (buffer) | GPUh.
 
 - WP3.1 training. Throughput: 0.140 samples/s/GPU = 6.9k visual tokens/s/GPU (job 3282051, 4 GPU);
-  ladder numbers TODO (jobs `ladder`). Target scale: 64 GPUs (16 nodes) TODO decide; ideal accum =
+  ladder 4/8/12/16 GPU = 100/99.8/98.7/98.5 % (jobs 3283278/3283391/3283394/3283421). Target scale: 64 GPUs (16 nodes) TODO decide; ideal accum =
   1 at target. Data target = windows x epochs: TODO from WP1 (DROID 76K traj, AgiBot ~1M, RH20T
   110K, BridgeV2/RT-1 raw ~130K, OXE remainder + sim ~500K, consortium TBD) -> placeholder 100M
   windows x 2-3 epochs. GPU-h = windows x epochs / (0.140 x 3600) / eff + 15% overhead.
@@ -45,8 +45,8 @@ diff-to-prod? data ready? | avg throughput [strong-scaling eff %] | run duration
   per-sample cost (a candidate chunk is an action input: same pass) + ensemble M x predictor share
   (predictor = ~21% of forward, phase timer job 3281372). Placeholder N=4, M=3, 25% of windows.
 - WP3.3 rollout inference for planning / imagined experience. Cost = rollouts x K steps x forward
-  cost per predicted anchor; measured forward-only throughput TODO (job `infer`, `--eval-only`),
-  target-scale GSSR at 16 GPUs (embarrassingly parallel). Placeholder 20M rollouts x 8 steps.
+  cost per predicted anchor; measured forward + loss pass 1.97 s/sample = 0.51 samples/s/GPU, 30.7 GB (job 3283544, batch 1;
+  3.6x the training rate); target-scale GSSR at 16 GPUs still TODO (embarrassingly parallel). Placeholder 20M rollouts x 8 steps.
 - Split placeholder 55 / 25 / 20 of 0.22 G = 1.01M GPU-h; decide with Philipp/Marc whether 0.22 G
   is a target or an output of the sum.
 - Gantt: M1-M2 rollout loop + data converters (dep. WP1), M3-M8 WP3.1 (dep. WP2 checkpoint at M3,
@@ -61,7 +61,8 @@ diff-to-prod? data ready? | avg throughput [strong-scaling eff %] | run duration
   448 with deep checkpointing), accumulation to hold the global batch fixed across the ladder;
   minimal setup = 1 GPU; baseline = 1 node.
 - Ladder table with job IDs + log paths (`/capstor/store/cscs/swissai/a144/...` copy TODO):
-  4/8/12/16 GPUs at global batch 48 (TODO numbers). Beyond 16 GPUs: `normal` partition TODO
+  4/8/12/16 GPUs at global batch 48 = 7.124/7.140/7.214/7.231 s/sample, 100/99.8/98.7/98.5 %,
+  GSSR green at every point (table in `WP3_feasibility.md`). Beyond 16 GPUs: `normal` partition TODO
   (32/64) or justify by the DDP argument (1.4B trainable, 2.8 GB bf16 gradients per step,
   reduce-scatter overlapped with backward; 98% compute occupancy measured).
 - GSSR: contract 448 = GPU util 85-88% good, FP util 0.37-0.39 good, 441-452 W acceptable,

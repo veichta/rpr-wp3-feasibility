@@ -113,6 +113,16 @@ the global batch at 48 for the strong-scaling comparison; at the target scale (6
 the natural global batch is 64 with no accumulation, and the 16-GPU point (accumulation 3) already
 shows the per-step gradient communication of that layout costs under 2 %.
 
+### Inference throughput (WP3.3 proxy, 4 GPUs, job 3283544)
+
+Forward + loss pass of the same 448 contract (`--eval-only`, batch 1, 100 samples per GPU, 400
+hard-linked copies of the smoke demo): 197 s active window per GPU (1 s DCGM samples) =
+1.97 s/sample = 0.51 samples/s/GPU = 2.03 samples/s per node, 3.6x the training rate
+(7.12 s/sample). Peak memory 30.7 GB/GPU (room for batch 3). GSSR over the whole run: GPU util
+67-73 % acceptable (the 85 s start-up is inside the window), FP util 0.31-0.34 good (0.45 over
+the busy ticks), 383 W; PDF `runs/infer_4gpu_3283544/gssr_3283544.pdf`. WP3.3 rollouts are
+this pass repeated K times per rollout (one predicted anchor per step), embarrassingly parallel.
+
 ## Data and I/O Requirements (WP3)
 
 Datasets (project-wide list lives in WP1; WP3 consumes the converted robot shards):

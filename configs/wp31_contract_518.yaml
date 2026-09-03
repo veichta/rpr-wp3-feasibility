@@ -59,8 +59,10 @@ predictor:
   clip_model: "${oc.env:CLIP,openai/clip-vit-large-patch14}"
   lambda_feat_future: 1.0
   lambda_sigreg: 0.0
-  H_choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  H_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  # Fixed full history: per-rank H sampling (paper: 1..7) makes ranks unequal and every gradient
+  # all-reduce wait for the slowest rank (60% of GPU time in NCCL spin, measured 2026-09-03).
+  H_choices: [15]
+  H_weights: [1]
   num_register_tokens: 0
   deep_gradient_checkpointing: true
 

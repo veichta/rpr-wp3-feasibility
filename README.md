@@ -18,6 +18,8 @@ the Clariden root receives the tracked files by rsync (Clariden has no GitHub ke
 ```
 README.md            this file
 scripts/             setup.sh, env.sh, build_env.sh, check_env.py, gpu_burn.py, *.sbatch
+configs/             our GAM training yamls (wp31_contract_518.yaml = the WP3.1 production shape)
+patches/             idempotent patches applied to the GAM tree by setup.sh (torch.profiler window)
 env/gam.toml         container EDF (NGC PyTorch 25.03 + NCCL + DCGM hooks)
 env/gam-venv/        Python venv built inside the container (see Create env)
 code/gam             GAM source; symlinks Depth-Anything-3 -> ../Depth-Anything-3, checkpoints/ and data/ -> assets/
@@ -62,24 +64,26 @@ sbatch scripts/smoke.sbatch
 60 s of matmuls on all 4 GPUs under `gssr-record`, `gssr-analyze` to PDF, then 3 single-GPU
 training steps of GAM on the LIBERO smoke file. Output in `runs/smoke_<jid>/`.
 
-## Scaling runs
+## Measurement runs
 
 ```bash
-sbatch -N 1 --export=ALL,TAG=ddp scripts/gam_scale.sbatch      # 4 GPUs
-sbatch -N 2 --export=ALL,TAG=ddp scripts/gam_scale.sbatch      # 8 GPUs
-sbatch -N 3 --export=ALL,TAG=ddp scripts/gam_scale.sbatch      # 12 GPUs
-sbatch -N 4 --export=ALL,TAG=ddp scripts/gam_scale.sbatch      # 16 GPUs (debug partition ceiling)
+sbatch -N 1 --export=ALL,TAG=contract,DS=1                 scripts/gam_scale.sbatch   # 4 GPUs, contract config
+sbatch -N 4 --export=ALL,TAG=contract,DS=1,GLOBAL=16       scripts/gam_scale.sbatch   # 16 GPUs, same global batch
+sbatch -N 1 --export=ALL,TAG=profile,DS=1,PROFILE=1        scripts/gam_scale.sbatch   # + phase timer + torch.profiler
+sbatch -N 1 --export=ALL,TAG=paper,CONFIG=$R/code/gam/configs/training/libero_unified/gam/chunk8_150k_2node.yaml,GLOBAL=48,MICRO=3 scripts/gam_scale.sbatch
 ```
 
-Paper config (`chunk8_150k_2node.yaml`: DA3-Giant frozen below block 13, 12-layer predictor,
-224 px, 2 views, 8 anchors per sample, 8-step action chunks), global batch fixed at 48 across GPU
-counts, `STEPS` steps (default 300; `-t` and `STEPS` set per run), torchrun DDP (add `DS=1` for
-DeepSpeed ZeRO-2). Throughput is the `s/step` field of the training log (patched to three
-decimals, see `setup.sh`); each job records `gssr_report/` and writes `gssr_<jobid>.pdf` at the
-end (`scripts/gssr_pdfs.sbatch` does the same standalone). `env.sh` turns on GAM's data-loader
-wait logging (rank 0, every 10 steps) and sets GAM's walltime guard to 90 s (default 600 s: it
-stops and checkpoints that long before the SLURM limit). Startup (checkpoint + CLIP load, NCCL
-init) takes ~2-3.5 min before the first step.
+All model and data settings live in the yaml (`configs/wp31_contract_518.yaml` by default). The
+script sets only run length (`STEPS`), the batch layout (`GLOBAL` held fixed across node counts,
+`MICRO`, accumulation derived), the launcher (`DS=1` = DeepSpeed ZeRO-2 with a generated JSON,
+default torchrun DDP), profiling (`PROFILE=1` = GAM's phase timer every 10 steps plus a
+torch.profiler window on micro-steps 30-35 of rank 0, written to `results/*/torch_profile/`), and
+ad-hoc `--set` overrides via `EXTRA` (export it in the shell when a value contains commas). Every run
+copies its yaml to `runs/<run>/config.yaml`. Throughput is the `s/step` field of the training log
+(patched to three decimals, see `setup.sh`; on the DeepSpeed path GAM counts micro-batches as steps);
+each job records `gssr_report/` and writes `gssr_<jobid>.pdf` at the end (`scripts/gssr_pdfs.sbatch`
+does the same standalone). `env.sh` turns on GAM's data-loader wait logging and sets GAM's walltime
+guard to 90 s. Startup (checkpoint + CLIP load, NCCL init, compile) takes ~2-4 min before the first step.
 
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
 queued job per user. Convention (2026-09-03): every measurement job is 20 min, the longest that fits

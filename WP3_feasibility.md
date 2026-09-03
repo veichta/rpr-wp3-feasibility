@@ -83,13 +83,14 @@ DCGM CSVs in `runs/<run>/gssr_report/`. Logs and job scripts: TODO copy to
 | contract 518, accumulation 4 | 65,712 | 0.106 | 81 | 83-86 % good | 0.16-0.17 acceptable | 3280912 |
 | contract 518, accumulation 4, batched depth decode (16) + torch.compile | 65,712 | 0.109 | 83 | 86-88 % good | 0.18-0.19 acceptable | 3281016 |
 | contract 518 with H fixed to 15 on every rank (no per-rank load imbalance) | 65,712 | 0.085 | 89 | 82-85 % good | 0.34-0.35 good | 3281372 |
+| **contract 448** (pi0.7 operating point; native for 480p sources), H=15, same otherwise | 49,152 | 0.140 | 70 | 85-88 % good | 0.37-0.39 good | 3282051 |
 
 Profiling (torch.profiler on rank 0, job 3281286) showed that with GAM's per-rank sampling of the
 history length H (1..15) the ranks do unequal work and 49 % of GPU time is spent waiting in NCCL
 all-reduce kernels (median 214 ms per bucket vs 45 ms once balanced); GPU Util counts that spin as
 busy, FP Util does not. With H equal on all ranks (job 3281372) compute occupies 98 % of the window
 and FP Util reaches 0.35. Patch `patches/gam_sync_H.py` keeps GAM's H curriculum but draws the same
-H on every rank per step. The H=15 row is the WP3.1 candidate: native DA3 resolution, three views, 16 horizons, geometry
+H on every rank per step. The 448 px row is the WP3.1 candidate (pi0.7 runs at 448 x 448 with 3-4 cameras; 448 is native for the 480p raw sources and needs no upsampling argument): native DA3 resolution, three views, 16 horizons, geometry
 losses on, the whole model trainable. Budget at this shape: 1 GPU-h = 378 samples, so 400k GPU-h
 = 151M samples (~1.5 epochs over ~100M windows) and 1.0M GPU-h = 378M samples (~3.8 epochs).
 Probe stand-ins (compute-neutral): third view = duplicated external camera, anchor spacing 4 frames

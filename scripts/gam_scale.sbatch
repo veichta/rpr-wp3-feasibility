@@ -8,6 +8,7 @@
 #SBATCH --time=00:20:00
 #SBATCH --output=/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/%x-%j.out
 # One strong-scaling point of GAM training (paper config, LIBERO smoke data, global batch fixed at 48).
+# The smoke file holds one demo: min_train_batches_per_epoch virtualizes the epoch (random window start per sample).
 #   sbatch -N <nodes> [-t hh:mm:ss] --export=ALL,TAG=<tag>[,STEPS=300][,CONFIG=<yaml>][,DS=1][,EXTRA="--set k=v ..."] scripts/gam_scale.sbatch
 set -eo pipefail
 source ${RPR_WP3_ROOT:-/iopsstor/scratch/cscs/veichta/rpr-wp3}/scripts/env.sh
@@ -35,5 +36,5 @@ $SRUN bash -c "
     src/train_robot.py --config $CONFIG $DSFLAG --results-dir $OUT/results \
     --set training.max_steps=$STEPS --set training.log_every=10 --set training.ckpt_every=999999 --set training.vis_every=999999 \
     --set training.global_batch_size=48 --set training.micro_batch_size=$MICRO --set training.grad_accum_steps=$ACCUM \
-    --set dataset.eval_ratio=0 --set predictor.clip_model=$CLIP ${EXTRA:-}
+    --set dataset.eval_ratio=0 --set training.min_train_batches_per_epoch=200 --set predictor.clip_model=$CLIP ${EXTRA:-}
 "

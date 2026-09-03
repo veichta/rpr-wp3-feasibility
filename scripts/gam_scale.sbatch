@@ -35,5 +35,5 @@ $SRUN bash -c "
     src/train_robot.py --config $CONFIG $DSFLAG --results-dir $OUT/results \
     --set training.max_steps=$STEPS --set training.log_every=10 --set training.ckpt_every=999999 --set training.vis_every=999999 \
     --set training.global_batch_size=48 --set training.micro_batch_size=$MICRO --set training.grad_accum_steps=$ACCUM \
-    --set predictor.clip_model=$CLIP ${EXTRA:-}
+    --set dataset.eval_ratio=0 --set predictor.clip_model=$CLIP ${EXTRA:-}
 "

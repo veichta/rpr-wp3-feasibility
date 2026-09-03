@@ -77,10 +77,19 @@ field of the training log; each job also leaves a `gssr_report/` for `gssr-analy
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
 queued job per user.
 
+## Pull reports to the local mirror
+
+```bash
+bash scripts/pull_runs.sh      # from academic/proposals/cscs-26-large/wp3-feasibility/
+```
+
+Copies every `runs/<job>/` slurm `.out`, GSSR PDF and raw `gssr_report/` CSVs, and training logs
+into `runs/` here (gitignored on both sides).
+
 ## Job log
 
-| job | what | result |
-|---|---|---|
-| 3276849 | env build | FAILED: NGC `PIP_CONSTRAINT` pins regex, transformers 5.5.4 needs newer |
-| 3276857 | env build + gssr burn + smoke | venv OK, gssr burn OK, smoke failed on `--set` syntax (one `--set` per override) |
-| 3276947 | smoke | gssr burn + PDF OK; training failed: `depth_anything_3` not on sys.path (GAM looks under src/); fixed via PYTHONPATH in env.sh |
+| job     | what                          | result                                                                                                                         |
+| ------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 3276849 | env build                     | FAILED: NGC `PIP_CONSTRAINT` pins regex, transformers 5.5.4 needs newer                                                        |
+| 3276857 | env build + gssr burn + smoke | venv OK, gssr burn OK, smoke failed on `--set` syntax (one `--set` per override)                                               |
+| 3276947 | smoke                         | gssr burn + PDF OK; training failed: `depth_anything_3` not on sys.path (GAM looks under src/); fixed via PYTHONPATH in env.sh |

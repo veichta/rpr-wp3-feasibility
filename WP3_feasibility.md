@@ -70,6 +70,23 @@ GSSR (all runs, training phase): ~70 % GPU utilization, ~55 % SM active, ~20 % S
 DCGM CSVs in `runs/<run>/gssr_report/`. Logs and job scripts: TODO copy to
 `/capstor/store/cscs/swissai/a144/Logs/feasibility_review_rpr/WP3/` (csstaff-readable).
 
+### Production-shape probes (4 GPUs, 2026-09-03 afternoon)
+
+| setting | visual tokens/sample | samples/s/GPU | GB/GPU | GPU Util | FP Util | job |
+|---|---|---|---|---|---|---|
+| paper config, frozen encoder, DDP micro 3 | 4,096 | 3.60 | 90 | 66 % acceptable | 0.17 acceptable | 3277872 |
+| full fine-tune, ZeRO-2 micro 1, 224 | 4,096 | 1.93 | 29 | 43 % improve | 0.03 poor | 3279908 |
+| full fine-tune, ZeRO-2 micro 1, 448 | 16,384 | 1.00 | 71 | 75-79 % good | 0.11-0.12 improve | 3280114 |
+| full fine-tune, ZeRO-2 micro 1, 518 | 21,904 | 0.72 | 90 | 77-80 % good | 0.12-0.13 improve/acceptable | 3280203 |
+| contract 224: 3 views x 16 anchors, full FT, da3_style loss, deep ckpt, micro 1 | 12,288 | 0.67 | 27 | 58-61 % acceptable | 0.07-0.08 improve | 3280385 |
+| contract 518: 3 views x 16 anchors, full FT, da3_full loss (depth+ray+point), deep ckpt, micro 1, no accumulation | 65,712 | 0.105 | 80 | 82-85 % good | 0.16-0.17 acceptable | 3280628 |
+
+The last row is the WP3.1 candidate: native DA3 resolution, three views, 16 horizons, geometry
+losses on, the whole model trainable. Budget at this shape: 1 GPU-h = 378 samples, so 400k GPU-h
+= 151M samples (~1.5 epochs over ~100M windows) and 1.0M GPU-h = 378M samples (~3.8 epochs).
+Probe stand-ins (compute-neutral): third view = duplicated external camera, anchor spacing 4 frames
+instead of 8 because the 98-frame smoke demo cannot host 16 anchors at 8.
+
 ## Data and I/O Requirements (WP3)
 
 Datasets (project-wide list lives in WP1; WP3 consumes the converted robot shards):

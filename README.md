@@ -117,5 +117,6 @@ small fraction, and quote the "after" column.
 | 3277556 | scale 16 GPU (4 nodes), 150 steps | training COMPLETED 4:49: steps 20-150 at 0.6-1.0 s/step, mean 0.72 = 66.6 samples/s (4.16 per GPU), 112% = one-decimal rounding; data-loader wait 0.00 s; same PDF-stage failure |
 | 3277648 | gssr PDFs for the four scaling runs | COMPLETED, PDFs in runs/ddp_*gpu_*/ |
 | 3277709 | scale 4 GPU rerun, data-wait logging, 150 steps | COMPLETED 10:36: 3.2-3.3 s/step, wait 0.00 s at every logged batch -> baseline is compute-bound; PDF in-job |
-| 3277723 | scale 8 GPU rerun, 3-decimal s/step, 150 steps | running |
-| 3277872 | long 4 GPU, 1 node x 60 min, 1000 steps (submission series) | queued |
+| 3277723 | scale 8 GPU rerun, 3-decimal s/step, 150 steps | COMPLETED 7:25: steps 20-150 mean 1.540 s/step (1.06-1.90, std ~0.2) = 31.2 samples/s (3.90 per GPU), 104% of linear; wait 0.00 s; multi-node windows jitter ±30% while the single-node run is steady |
+| 3277872 | long 4 GPU, 1 node x 60 min, 1000 steps (submission series) | running |
+| 3277945 | long 8 GPU, 2 nodes x 40 min, 1200 steps (submission series) | queued |

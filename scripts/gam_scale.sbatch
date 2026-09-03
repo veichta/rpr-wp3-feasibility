@@ -23,6 +23,7 @@ case $NGPU in       # micro x accum x gpus = 48
   16) MICRO=3; ACCUM=1 ;;
   *)  echo "unsupported gpu count $NGPU"; exit 1 ;;
 esac
+MICRO=${MICRO_OVERRIDE:-$MICRO}; ACCUM=${ACCUM_OVERRIDE:-$ACCUM}   # e.g. MICRO_OVERRIDE=1 ACCUM_OVERRIDE=12 keeps global 48 on 4 GPUs
 OUT=$R/runs/${TAG}_${NGPU}gpu_${SLURM_JOB_ID}; mkdir -p $OUT
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -1)
 export MASTER_PORT=$((29000 + SLURM_JOB_ID % 10000))

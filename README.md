@@ -19,7 +19,7 @@ the Clariden root receives the tracked files by rsync (Clariden has no GitHub ke
 README.md            this file
 scripts/             setup.sh, env.sh, build_env.sh, check_env.py, gpu_burn.py, *.sbatch
 configs/             our GAM training yamls (wp31_contract_518.yaml = the WP3.1 production shape)
-patches/             idempotent patches applied to the GAM tree by setup.sh (torch.profiler window)
+patches/             idempotent patches applied to the GAM tree by setup.sh (torch.profiler window; rank-synchronized H draw)
 env/gam.toml         container EDF (NGC PyTorch 25.03 + NCCL + DCGM hooks)
 env/gam-venv/        Python venv built inside the container (see Create env)
 code/gam             GAM source; symlinks Depth-Anything-3 -> ../Depth-Anything-3, checkpoints/ and data/ -> assets/
@@ -143,3 +143,4 @@ small fraction, and quote the "after" column.
 | 3280912 | contract 518 px as 3280628 but gradient accumulation 4 (global batch 16) | 9.39 s per micro-step (std 1.15) = 0.106 samples/s/GPU, 81 GB used; GSSR: GPU util 83-86% good, FP util 0.16-0.17 acceptable, 305 W -> identical to the no-accumulation run: the optimizer/ZeRO step is not the FP-util limiter |
 | 3281016 | contract 518 px, accum 4, + `depth_decode_chunk_size=16` + `training.compile=true` | 9.21 s per micro-step (std 1.07) = 0.109 samples/s/GPU (+3% vs 9.39), 83 GB; GSSR: GPU util 86-88% good, FP util 0.18-0.19 acceptable (from 0.16-0.17), 321 W; compile adds ~1 min startup |
 | 3281286 | contract 518 (clean yaml `configs/wp31_contract_518.yaml`), ZeRO-2 accum 4, PROFILE=1 (phase timer + torch.profiler steps 30-35) | phase timer: loader/prep ~5 ms, forward 0.8-3.1 s depending on the sampled history H (5..15), backward 3.1x forward (grad + checkpoint recompute), optimizer 25 ms; torch.profiler: 60% of GPU time in NCCL all-reduce kernels (241 bf16 ring + u32 overflow checks) = ranks waiting for the slowest rank, because H is sampled per rank -> load imbalance is the FP-util limiter, not kernel efficiency; flash-attention 13%, compiled GEMMs 10%, layer norms 4%; kernel table in runs/contract-518-profile_4gpu_3281286/results/*/torch_profile/ |
+| 3281372 | contract 518, fixed H=15 on every rank (config `H_choices: [15]`), ZeRO-2 accum 4, PROFILE=1 | 11.72 s per micro-step (std 0.01!) = 0.085 samples/s/GPU = 5.6k tokens/s/GPU; 89 GB; torch.profiler: compute busy 98% of the window, NCCL 9% overlapped, NCCL-only 1% (was 50/75/49% with per-rank H sampling), NCCL kernel median 45 ms (was 214); DCGM tensor pipe 0.32, fp32 0.09, SM active 0.85; GSSR: GPU util 82-85% good, FP util 0.34-0.35 GOOD, 411-422 W acceptable, GPU start 87% good -> all green except power (>500 W unreachable) |

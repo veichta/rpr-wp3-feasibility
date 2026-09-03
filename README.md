@@ -121,5 +121,6 @@ small fraction, and quote the "after" column.
 | 3277709 | scale 4 GPU rerun, data-wait logging, 150 steps              | COMPLETED 10:36: 3.2-3.3 s/step, wait 0.00 s at every logged batch -> baseline is compute-bound; PDF in-job                                                                                                 |
 | 3277723 | scale 8 GPU rerun, 3-decimal s/step, 150 steps               | COMPLETED 7:25: steps 20-150 mean 1.540 s/step (1.06-1.90, std ~0.2) = 31.2 samples/s (3.90 per GPU), 104% of linear; wait 0.00 s; multi-node windows jitter ±30% while the single-node run is steady       |
 | 3277872 | long 4 GPU, 1 node x 60 min, 1000 steps (submission series) | COMPLETED 57:50, all 1000 steps: mean 3.333 s/step (std 0.287, 2.70-4.33) = 14.40 samples/s (3.60 per GPU); GSSR over the whole job: GPU util 66.3% acceptable, FP util 0.17 acceptable, 373 W, GPU start 97% good |
-| 3277945 | long 8 GPU, 2 nodes x 40 min, 1200 steps (submission series) | running |
-| 3278593 | long 12 GPU, 3 nodes x 28 min, 1100 steps (submission series) | queued |
+| 3277945 | long 8 GPU, 2 nodes x 40 min, 1200 steps (submission series) | COMPLETED 38:08, all 1200 steps: mean 1.657 s/step (std 0.195, 1.14-2.23) = 28.97 samples/s (3.62 per GPU), 100.6% of linear vs the long 4-GPU run |
+| 3278593 | long 12 GPU, 3 nodes x 28 min, 1100 steps (submission series) | running |
+| 3279116 | long 16 GPU, 4 nodes x 22 min, 1300 steps (submission series) | queued |

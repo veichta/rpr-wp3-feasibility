@@ -6,10 +6,12 @@ Model (GAM, `cvlab-kaist/Geometric-Action-Model` @ 58bb91e) on a DA3-Giant backb
 (`ByteDance-Seed/Depth-Anything-3` @ 2c21ea8), NGC PyTorch 25.03 container, GH200 nodes.
 
 Everything lives under one root, `$RPR_WP3_ROOT` (default `/iopsstor/scratch/cscs/veichta/rpr-wp3`).
-This folder is a git repo: only `README.md`, `scripts/`, `env/gam.toml` and `.gitignore` are
-tracked; `code/`, `assets/`, `env/gam-venv/`, `tools/` and `runs/` are reproduced by the commands
-below. A mirror of the tracked files lives in the SplatFactory checkout under
-`academic/proposals/cscs-26-large/wp3-feasibility/`.
+Git: `git@github.com:veichta/rpr-wp3-feasibility.git`. Only `README.md`, `WP3_feasibility.md`,
+`scripts/`, `env/gam.toml` and `.gitignore` are tracked; `code/`, `assets/`, `env/gam-venv/`,
+`tools/` and `runs/` are reproduced by the commands below. The working copy that commits and pushes
+is the local mirror in the SplatFactory checkout (`academic/proposals/cscs-26-large/wp3-feasibility/`);
+the Clariden root receives the tracked files by rsync (Clariden has no GitHub key). Anyone else:
+`git clone` on Clariden over https, then follow Setup.
 
 ## Layout
 

@@ -87,6 +87,17 @@ bash scripts/pull_runs.sh      # from academic/proposals/cscs-26-large/wp3-feasi
 Copies every `runs/<job>/` slurm `.out`, GSSR PDF and raw `gssr_report/` CSVs, and training logs
 into `runs/` here (gitignored on both sides).
 
+## GSSR reading of the first scaling series (2026-09-03)
+
+During the training phase every run shows ~70% GPU utilization, ~50-55% SM active, ~20% SM
+occupancy, ~15-18% tensor-pipe activity, ~370 W per GPU, and 85-90 GB of the 96 GB used at
+micro-batch 3 (so 3 is the largest micro-batch that fits). GSSR's headline "Total Runtime" ratings
+are dragged down by the startup phase (checkpoint + CLIP load, NCCL init: ~110-160 s with no GPU
+activity): 4 GPUs 52.6% "acceptable" over 11 min, 16 GPUs 33.9% "improve" over 4.8 min. The
+"After GPU Util > 50%" column is the fairer one (56% / 35% because the tail is included too).
+Consequence for the submission runs: make the training phase long (>= 15 min) so startup is a
+small fraction, and quote the "after" column.
+
 ## Job log
 
 | job     | what                          | result                                                                                                                         |

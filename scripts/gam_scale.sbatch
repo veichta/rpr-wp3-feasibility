@@ -26,7 +26,9 @@ esac
 OUT=$R/runs/${TAG}_${NGPU}gpu_${SLURM_JOB_ID}; mkdir -p $OUT
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -1)
 export MASTER_PORT=$((29000 + SLURM_JOB_ID % 10000))
-DSFLAG=""; [ "${DS:-0}" = "1" ] && DSFLAG="--deepspeed_config configs/training/libero_unified/deepspeed/micro2.json"
+# DS=1: DeepSpeed ZeRO-2 instead of DDP. GAM hands its own AdamW to deepspeed.initialize, so the JSON only sets
+# batch/accumulation (must match micro x accum above for the 4-GPU point) and the ZeRO stage.
+DSFLAG=""; [ "${DS:-0}" = "1" ] && DSFLAG="--deepspeed_config ${DS_CONFIG:-$R/scripts/ds_micro3_accum4.json}"
 echo "job $SLURM_JOB_ID nodes $SLURM_NNODES gpus $NGPU micro $MICRO accum $ACCUM steps $STEPS config $CONFIG ds ${DS:-0} extra ${EXTRA:-}"
 $SRUN bash -c "
   source $R/env/gam-venv/bin/activate &&

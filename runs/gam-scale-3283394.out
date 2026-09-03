@@ -1,0 +1,1 @@
+job 3283394 nodes 3 gpus 12 micro 1 accum 4 global 48 steps 120 config /iopsstor/scratch/cscs/veichta/rpr-wp3/configs/wp31_contract_448.yaml ds 1 profile 0 extra 

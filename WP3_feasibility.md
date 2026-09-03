@@ -56,7 +56,7 @@ which costs efficiency; production global batches are multiples of 3 x #GPUs.
 | 4 | 1 | 3 x 4 | 3.333 (std 0.287, 1000 steps) | 14.40 | 100 % | 3277872 | runs/long_4gpu_3277872/gssr_3277872.pdf: GPU util 66 %, FP 0.17, 373 W |
 | 8 | 2 | 3 x 2 | 1.657 (std 0.195, 1200 steps) | 28.97 | 101 % | 3277945 | runs/long_8gpu_3277945/gssr_3277945.pdf |
 | 12 | 3 | 2 x 2 | 1.282 (std 0.116, 1071 steps; one 121 s loader stall at an epoch boundary excluded) | 37.4 | 87 % | 3278593 | runs/long_12gpu_3278593/gssr_3278593.pdf |
-| 16    | 4     | 3 x 1         | TODO   | TODO      | TODO       | TODO      | TODO     |
+| 16 | 4 | 3 x 1 | 0.868 (std 0.144, 1220 steps) | 55.3 | 96 % | 3279116 | runs/long_16gpu_3279116/ (PDF pending) |
 
 Beyond 16 GPUs (debug partition ceiling) requires the `normal` partition: TODO 32/64 GPU points
 if the queue allows before submission; otherwise state the 16-GPU measurement and the DDP

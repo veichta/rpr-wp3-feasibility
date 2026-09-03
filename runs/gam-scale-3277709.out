@@ -1,0 +1,312 @@
+job 3277709 nodes 1 gpus 4 micro 3 accum 4 steps 150 config configs/training/libero_unified/gam/chunk8_150k_2node.yaml ds 0 extra 
+0: Config: configs/training/libero_unified/gam/chunk8_150k_2node.yaml
+0: Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/ddp-waitlog_4gpu_3277709/results/robot-20260903-122257
+0: Distributed process-group timeout: 120.0 minutes
+0: Installed training preemption signal handlers: SIGUSR1, SIGTERM
+0: Slurm walltime guard: remaining=847s preemption_guard=90s closed_loop_guard=1800s
+0: Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+0: bf16=True, compile=False, world_size=4
+0: DA3 fine-tune views: n_views=2 camera_keys=['agentview_rgb', 'eye_in_hand_rgb'] rollout_camera_keys=None
+0: Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+0: Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m[97m[INFO ] using SwiGLU layer as FFN[0m
+0: 
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: Stage 1 backbone: type=da3 embed_dim=1536 patches/view=256 registers=0 freeze_before=13
+0: ActionHeadV2: chunk_size=8 chunk_position_encoding=learned
+0: Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=False, predictor_gradient_checkpointing=False, backbone_deep_gradient_checkpointing=False, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2616.60it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2576.53it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2596.28it/s]
+0: 
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2557.34it/s]
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{
+0: 0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight     
+0:                                   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.posit
+0: ion_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                  
+0:                                   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: FuturePredictor trainable params: 260.6M
+0: Student DA3 + head + predictor trainable params: 1033.5M
+0: Unified DA3 GT depth loss enabled: type=da3_style lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=0.0000 lambda_point=0.0000 lambda_camera_pose=0.0000
+0: Unified GT depth decode chunk size: 1
+0: Unified GT depth decode context: full_sequence future_steps=0
+0: Wrapped model in DDP (world_size=4)
+0: Optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+0: Schedule: cosine decay, warmup=500 steps, max=150 steps, min_lr_ratio=0.010
+0: DDP gradient accumulation: grad_accum_steps=4 no_sync_non_boundary=True
+0: LiberoHDF5SequenceDataset [train]: 1 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb'] uniform_action_sampling=False hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=embedded_hdf5 noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: Dataset build [train] size=1 elapsed=0.0s max_episodes=None eval_max_episodes=None batch_size=3
+0: Dataset virtual epoch [train] physical_size=1 virtual_size=2400 min_batches_per_rank=200
+0: LiberoHDF5SequenceDataset [train]: 1 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb'] uniform_action_sampling=False hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=embedded_hdf5 noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95LiberoHDF5SequenceDataset [train]: 1 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb'] uniform_action_sampling=False hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=embedded_hdf5 noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: 
+0: 
+0: LiberoHDF5SequenceDataset [train]: 1 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb'] uniform_action_sampling=False hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=embedded_hdf5 noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: 
+0: Skipping eval dataset build (eval_every=999999)
+0: Syncing action-stats-dir-create normalizer stats across 4 ranks
+0: Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+0: Action normalizer stats keys: ['libero_hdf5']
+0: Syncing proprio-stats-dir-create normalizer stats across 4 ranks
+0: Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+0: Proprio normalizer stats keys: ['libero_hdf5']
+0: Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+0: Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+0: ======================================================================
+0: TRAINING CONFIGURATION
+0: ======================================================================
+0:   target_hz: None
+0:   libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=8  chunk=8  labels/sample=64  effective=20.0Hz  max_stride=1
+0:   action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+0:   action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+0:   action_head chunk_position_encoding: learned
+0:   samples=2400  batch=3  epochs=500000  batches/epoch=200
+0: ======================================================================
+0: Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+0: Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+0: [data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=37 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=11-33 frames=11-89
+0: [data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=38 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=5-32 frames=5-88
+0: [data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=39 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=12-23 frames=12-79
+0: [data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=13-27 frames=13-83
+0: [step=0000010] total=3.6014 action_l1=0.9150 feat=0.8249 depth=0.6306 ray=0.0000 point=0.0000 rel@1/5/10=0.032/0.175/0.359 mse=0.23509 s/step=4.0 lr=1.0e-06/1.0e-05
+0: [data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=77 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=4-27 frames=4-83
+0: [data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=78 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=3-24 frames=3-80
+0: [data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=79 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-29 frames=10-85
+0: [data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=80 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=11-27 frames=11-83
+0: [step=0000020] total=2.7131 action_l1=0.6191 feat=0.8244 depth=0.6250 ray=0.0000 point=0.0000 rel@1/5/10=0.060/0.387/0.625 mse=0.16652 s/step=3.1 lr=2.0e-06/2.0e-05
+0: [data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=117 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-28 frames=6-84
+0: [data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=118 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=21-27 frames=21-83
+0: [data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=119 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-28 frames=6-84
+0: [data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=120 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=21-26 frames=21-82
+0: [step=0000030] total=2.3951 action_l1=0.5133 feat=0.8242 depth=0.6188 ray=0.0000 point=0.0000 rel@1/5/10=0.060/0.286/0.503 mse=0.10690 s/step=3.6 lr=3.0e-06/3.0e-05
+0: [data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=157 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-18 frames=6-74
+0: [data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=158 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=8-23 frames=8-79
+0: [data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=159 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-20 frames=10-76
+0: [data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=160 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=0-24 frames=0-80
+0: [step=0000040] total=2.1817 action_l1=0.4418 feat=0.8254 depth=0.6191 ray=0.0000 point=0.0000 rel@1/5/10=0.077/0.301/0.539 mse=0.10183 s/step=3.4 lr=4.0e-06/4.0e-05
+0: [data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=197 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=13-33 frames=13-89
+0: [data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=198 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=9-30 frames=9-86
+0: [data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=199 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-18 frames=1-74
+0: [data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=200 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=14-26 frames=14-82
+0: [step=0000050] total=2.1670 action_l1=0.4374 feat=0.8243 depth=0.6110 ray=0.0000 point=0.0000 rel@1/5/10=0.080/0.372/0.591 mse=0.07145 s/step=3.2 lr=5.0e-06/5.0e-05
+0: [data-wait step=0000060 rank=0] wait=0.00s threshold=20.00s epoch_batch=37 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-22 frames=6-78
+0: [data-wait step=0000060 rank=0] wait=0.00s threshold=20.00s epoch_batch=38 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=4-26 frames=4-82
+0: [data-wait step=0000060 rank=0] wait=0.00s threshold=20.00s epoch_batch=39 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=14-23 frames=14-79
+0: [data-wait step=0000060 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-14 frames=6-70
+0: [step=0000060] total=2.1961 action_l1=0.4475 feat=0.8236 depth=0.6019 ray=0.0000 point=0.0000 rel@1/5/10=0.057/0.369/0.616 mse=0.11252 s/step=3.0 lr=6.0e-06/6.0e-05
+0: [data-wait step=0000070 rank=0] wait=0.00s threshold=20.00s epoch_batch=77 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=13-19 frames=13-75
+0: [data-wait step=0000070 rank=0] wait=0.00s threshold=20.00s epoch_batch=78 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=8-31 frames=8-87
+0: [data-wait step=0000070 rank=0] wait=0.00s threshold=20.00s epoch_batch=79 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-34 frames=1-90
+0: [data-wait step=0000070 rank=0] wait=0.00s threshold=20.00s epoch_batch=80 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-32 frames=1-88
+0: [step=0000070] total=2.0792 action_l1=0.4091 feat=0.8221 depth=0.5934 ray=0.0000 point=0.0000 rel@1/5/10=0.040/0.306/0.621 mse=0.05969 s/step=3.2 lr=7.0e-06/7.0e-05
+0: [data-wait step=0000080 rank=0] wait=0.00s threshold=20.00s epoch_batch=117 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=7-23 frames=7-79
+0: [data-wait step=0000080 rank=0] wait=0.00s threshold=20.00s epoch_batch=118 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=2-24 frames=2-80
+0: [data-wait step=0000080 rank=0] wait=0.00s threshold=20.00s epoch_batch=119 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-21 frames=10-77
+0: [data-wait step=0000080 rank=0] wait=0.00s threshold=20.00s epoch_batch=120 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=2-19 frames=2-75
+0: [step=0000080] total=2.1252 action_l1=0.4246 feat=0.8220 depth=0.5869 ray=0.0000 point=0.0000 rel@1/5/10=0.084/0.410/0.662 mse=0.05496 s/step=3.1 lr=8.0e-06/8.0e-05
+0: [data-wait step=0000090 rank=0] wait=0.00s threshold=20.00s epoch_batch=157 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=11-34 frames=11-90
+0: [data-wait step=0000090 rank=0] wait=0.00s threshold=20.00s epoch_batch=158 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-7 frames=1-63
+0: [data-wait step=0000090 rank=0] wait=0.00s threshold=20.00s epoch_batch=159 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-17 frames=10-73
+0: [data-wait step=0000090 rank=0] wait=0.00s threshold=20.00s epoch_batch=160 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=4-30 frames=4-86
+0: [step=0000090] total=2.1700 action_l1=0.4399 feat=0.8205 depth=0.5958 ray=0.0000 point=0.0000 rel@1/5/10=0.107/0.417/0.679 mse=0.05138 s/step=3.4 lr=9.0e-06/9.0e-05
+0: [data-wait step=0000100 rank=0] wait=0.00s threshold=20.00s epoch_batch=197 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-25 frames=1-81
+0: [data-wait step=0000100 rank=0] wait=0.00s threshold=20.00s epoch_batch=198 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=3-34 frames=3-90
+0: [data-wait step=0000100 rank=0] wait=0.00s threshold=20.00s epoch_batch=199 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=14-31 frames=14-87
+0: [data-wait step=0000100 rank=0] wait=0.00s threshold=20.00s epoch_batch=200 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=7-34 frames=7-90
+0: [step=0000100] total=2.0251 action_l1=0.3925 feat=0.8185 depth=0.5828 ray=0.0000 point=0.0000 rel@1/5/10=0.097/0.385/0.663 mse=0.05774 s/step=3.3 lr=1.0e-05/1.0e-04
+0: [data-wait step=0000110 rank=0] wait=0.00s threshold=20.00s epoch_batch=37 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-10 frames=6-66
+0: [data-wait step=0000110 rank=0] wait=0.00s threshold=20.00s epoch_batch=38 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=22-34 frames=22-90
+0: [data-wait step=0000110 rank=0] wait=0.00s threshold=20.00s epoch_batch=39 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=16-27 frames=16-83
+0: [data-wait step=0000110 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=8-34 frames=8-90
+0: [step=0000110] total=2.1344 action_l1=0.4302 feat=0.8156 depth=0.5639 ray=0.0000 point=0.0000 rel@1/5/10=0.085/0.425/0.696 mse=0.05754 s/step=3.3 lr=1.1e-05/1.1e-04
+0: [data-wait step=0000120 rank=0] wait=0.00s threshold=20.00s epoch_batch=77 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=3-22 frames=3-78
+0: [data-wait step=0000120 rank=0] wait=0.00s threshold=20.00s epoch_batch=78 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=16-21 frames=16-77
+0: [data-wait step=0000120 rank=0] wait=0.00s threshold=20.00s epoch_batch=79 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-34 frames=10-90
+0: [data-wait step=0000120 rank=0] wait=0.00s threshold=20.00s epoch_batch=80 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=19-25 frames=19-81
+0: [step=0000120] total=2.0109 action_l1=0.3901 feat=0.8129 depth=0.5547 ray=0.0000 point=0.0000 rel@1/5/10=0.083/0.360/0.640 mse=0.05725 s/step=3.0 lr=1.2e-05/1.2e-04
+0: [data-wait step=0000130 rank=0] wait=0.00s threshold=20.00s epoch_batch=117 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=6-31 frames=6-87
+0: [data-wait step=0000130 rank=0] wait=0.00s threshold=20.00s epoch_batch=118 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=16-28 frames=16-84
+0: [data-wait step=0000130 rank=0] wait=0.00s threshold=20.00s epoch_batch=119 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=18-34 frames=18-90
+0: [data-wait step=0000130 rank=0] wait=0.00s threshold=20.00s epoch_batch=120 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=5-24 frames=5-80
+0: [step=0000130] total=2.0912 action_l1=0.4178 feat=0.8106 depth=0.5423 ray=0.0000 point=0.0000 rel@1/5/10=0.089/0.607/0.821 mse=0.02312 s/step=3.3 lr=1.3e-05/1.3e-04
+0: [data-wait step=0000140 rank=0] wait=0.00s threshold=20.00s epoch_batch=157 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-22 frames=10-78
+0: [data-wait step=0000140 rank=0] wait=0.00s threshold=20.00s epoch_batch=158 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-7 frames=1-63
+0: [data-wait step=0000140 rank=0] wait=0.00s threshold=20.00s epoch_batch=159 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=15-33 frames=15-89
+0: [data-wait step=0000140 rank=0] wait=0.00s threshold=20.00s epoch_batch=160 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=10-28 frames=10-84
+0: [step=0000140] total=2.0946 action_l1=0.4198 feat=0.8077 depth=0.5515 ray=0.0000 point=0.0000 rel@1/5/10=0.099/0.426/0.738 mse=0.04118 s/step=3.2 lr=1.4e-05/1.4e-04
+0: [data-wait step=0000150 rank=0] wait=0.00s threshold=20.00s epoch_batch=197 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=2-29 frames=2-85
+0: [data-wait step=0000150 rank=0] wait=0.00s threshold=20.00s epoch_batch=198 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=1-34 frames=1-90
+0: [data-wait step=0000150 rank=0] wait=0.00s threshold=20.00s epoch_batch=199 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=4-18 frames=4-74
+0: [data-wait step=0000150 rank=0] wait=0.00s threshold=20.00s epoch_batch=200 datasets=libero_hdf5:3 stats=libero_hdf5:3 views=2:3 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:3 episodes=0-0 start_t=15-33 frames=15-89
+0: [step=0000150] total=2.0080 action_l1=0.3919 feat=0.8049 depth=0.5487 ray=0.0000 point=0.0000 rel@1/5/10=0.095/0.423/0.583 mse=0.09780 s/step=3.2 lr=1.5e-05/1.5e-04
+0: Training complete.
+0: [rank0]:[W903 12:31:33.190944864 ProcessGroupNCCL.cpp:1497] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: Saved PDF report to /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/ddp-waitlog_4gpu_3277709/gssr_3277709.pdf
+0: pdf /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/ddp-waitlog_4gpu_3277709/gssr_3277709.pdf

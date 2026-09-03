@@ -1,0 +1,39 @@
+Config: configs/training/libero_unified/smoke/gam_chunk2.yaml
+Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/smoke_3277295/results/robot-20260903-115013
+Distributed process-group timeout: 120.0 minutes
+Installed training preemption signal handlers: SIGUSR1, SIGTERM
+Slurm walltime guard: remaining=1121s preemption_guard=600s closed_loop_guard=1800s
+Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+bf16=True, compile=False, world_size=1
+DA3 fine-tune views: n_views=2 camera_keys=['agentview_rgb', 'eye_in_hand_rgb'] rollout_camera_keys=None
+Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+Stage 1 backbone: type=da3 embed_dim=1536 patches/view=256 registers=0 freeze_before=13
+ActionHeadV2: chunk_size=2 chunk_position_encoding=learned
+Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=True, predictor_gradient_checkpointing=True, backbone_deep_gradient_checkpointing=True, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+FuturePredictor trainable params: 260.5M
+Student DA3 + head + predictor trainable params: 1033.4M
+Unified DA3 GT depth loss enabled: type=da3_style lambda_depth=3.0000 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=0.0000 lambda_point=0.0000 lambda_camera_pose=0.0000
+Unified GT depth decode chunk size: 2
+Unified GT depth decode context: full_sequence future_steps=0
+Optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+Schedule: cosine decay, warmup=10 steps, max=3 steps, min_lr_ratio=0.010
+DDP gradient accumulation: grad_accum_steps=1 no_sync_non_boundary=False
+Skipping eval dataset build (eval_every=999999)
+Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+Action normalizer stats keys: ['libero_hdf5']
+Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+Proprio normalizer stats keys: ['libero_hdf5']
+Action stats: libero_hdf5: mean=[0.18410000205039978, 0.1143999993801117, -0.22360000014305115, 0.004699999932199717, -0.00860000029206276, -0.03999999910593033, 0.588100016117096] std=[0.4787999987602234, 0.23469999432563782, 0.5931000113487244, 0.032600000500679016, 0.06769999861717224, 0.0731000006198883, 0.49219998717308044]
+======================================================================
+TRAINING CONFIGURATION
+======================================================================
+  target_hz: None
+  libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=2  chunk=2  labels/sample=16  effective=20.0Hz  max_stride=1
+  action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+  action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+  action_head chunk_position_encoding: learned
+  samples=1  batch=1  epochs=1  batches/epoch=1
+======================================================================
+[step=0000001] total=5.9496 action_l1=1.1642 feat=0.8057 depth=0.5505 ray=0.0000 point=0.0000 rel@1/5/10=0.018/0.018/0.054 mse=0.49325 s/step=10.5 lr=5.0e-06/5.0e-05
+Training complete.

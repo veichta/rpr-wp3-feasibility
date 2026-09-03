@@ -1,0 +1,15 @@
+{
+    "gssr-record-version": "2.0",
+    "date": "2026-09-03T15:30:25+0200",
+    "cluster": "clariden",
+    "jobid": "3280114",
+    "jobname": "gam-scale",
+    "nnodes": "1",
+    "ntasks": "1",
+    "ngpus": "4",
+    "step_nnodes": "1",
+    "step_ntasks": "1",
+    "executable": "python",
+    "arguments": "'-m' 'torch.distributed.run' '--nproc_per_node=4' '--nnodes=1' '--node_rank=0' '--master_addr=nid006056' '--master_port=29114' 'src/train_robot.py' '--config' 'configs/training/libero_unified/gam/chunk8_150k_2node.yaml' '--deepspeed_config' '/iopsstor/scratch/cscs/veichta/rpr-wp3/scripts/ds_micro1_accum12.json' '--results-dir' '/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/fullft-zero2-mb1-448_4gpu_3280114/results' '--set' 'training.max_steps=400' '--set' 'training.log_every=10' '--set' 'training.ckpt_every=999999' '--set' 'training.vis_every=999999' '--set' 'training.global_batch_size=48' '--set' 'training.micro_batch_size=1' '--set' 'training.grad_accum_steps=12' '--set' 'dataset.eval_ratio=0' '--set' 'training.min_train_batches_per_epoch=200' '--set' 'predictor.clip_model=/iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14' '--set' 'da3_finetune.freeze_blocks_before=0' '--set' 'stage_1.encoder_input_size=448' '--set' 'predictor.num_patches_per_view=1024' '--set' 'dataset.image_size=[448,448]' "
+}
+

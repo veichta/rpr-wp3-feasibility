@@ -7,8 +7,8 @@ Model (GAM, `cvlab-kaist/Geometric-Action-Model` @ 58bb91e) on a DA3-Giant backb
 
 Everything lives under one root, `$RPR_WP3_ROOT` (default `/iopsstor/scratch/cscs/veichta/rpr-wp3`).
 Git: `git@github.com:veichta/rpr-wp3-feasibility.git`. Only `README.md`, `WP3_feasibility.md`,
-`scripts/`, `env/gam.toml` and `.gitignore` are tracked; `code/`, `assets/`, `env/gam-venv/`,
-`tools/` and `runs/` are reproduced by the commands below. The working copy that commits and pushes
+`scripts/`, `env/gam.toml` and `.gitignore` are tracked, plus the pulled `runs/` outputs; `code/`, `assets/`, `env/gam-venv/` and
+`tools/` are reproduced by the commands below. The working copy that commits and pushes
 is the local mirror in the SplatFactory checkout (`academic/proposals/cscs-26-large/wp3-feasibility/`);
 the Clariden root receives the tracked files by rsync (Clariden has no GitHub key). Anyone else:
 `git clone` on Clariden over https, then follow Setup.
@@ -96,8 +96,9 @@ so no hour-long runs there.
 bash scripts/pull_runs.sh      # from academic/proposals/cscs-26-large/wp3-feasibility/
 ```
 
-Copies every `runs/<job>/` slurm `.out`, GSSR PDF and raw `gssr_report/` CSVs, and training logs
-into `runs/` here (gitignored on both sides).
+Copies every `runs/<job>/` slurm `.out`, GSSR PDF and raw `gssr_report/` CSVs, config copy and
+training logs into `runs/` here, which is tracked in git (only the 200 MB torch.profiler traces and
+checkpoints are excluded), so every number in the report has its job output next to it.
 
 ## GSSR reading of the first scaling series (2026-09-03)
 

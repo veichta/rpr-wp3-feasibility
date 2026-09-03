@@ -1,0 +1,9 @@
+job 3280626 nodes 1 gpus 4 micro 1 accum 12 steps 60 config configs/training/libero_unified/gam/chunk8_150k_2node.yaml ds 1 extra --set da3_finetune.freeze_blocks_before=0 --set da3_finetune.n_views=3 --set dataset.n_views=3 --set dataset.camera_keys=[agentview_rgb,eye_in_hand_rgb,agentview_rgb] --set dataset.future_steps=15 --set da3_finetune.n_action_steps=16 --set dataset.chunk_size=4 --set action_head.chunk_size=4 --set predictor.H_choices=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] --set predictor.H_weights=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] --set regularization.depth_loss_type=da3_full --set regularization.lambda_point=1.0 --set regularization.lambda_ray=1.0 --set predictor.deep_gradient_checkpointing=true --set stage_1.encoder_input_size=518 --set predictor.num_patches_per_view=1369 --set dataset.image_size=[518,518]
+0: [2026-09-03T16:42:41.244] error: *** STEP 3280626.0 ON nid006044 CANCELLED AT 2026-09-03T16:42:41 DUE to SIGNAL Terminated ***
+[2026-09-03T16:42:41.244] error: *** JOB 3280626 ON nid006044 CANCELLED AT 2026-09-03T16:42:41 DUE to SIGNAL Terminated ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+0: W0903 16:42:41.244000 264007 torch/distributed/elastic/agent/server/api.py:719] Received 15 death signal, shutting down workers
+0: W0903 16:42:41.245000 264007 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 264053 closing signal SIGTERM
+0: W0903 16:42:41.246000 264007 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 264054 closing signal SIGTERM
+0: W0903 16:42:41.246000 264007 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 264055 closing signal SIGTERM
+0: W0903 16:42:41.247000 264007 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 264056 closing signal SIGTERM

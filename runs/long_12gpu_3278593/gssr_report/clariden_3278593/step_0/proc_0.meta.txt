@@ -1,0 +1,15 @@
+{
+    "gssr-record-version": "2.0",
+    "date": "2026-09-03T14:15:55+0200",
+    "cluster": "clariden",
+    "jobid": "3278593",
+    "jobname": "gam-scale",
+    "nnodes": "3",
+    "ntasks": "3",
+    "ngpus": "4",
+    "step_nnodes": "3",
+    "step_ntasks": "3",
+    "executable": "python",
+    "arguments": "'-m' 'torch.distributed.run' '--nproc_per_node=4' '--nnodes=3' '--node_rank=0' '--master_addr=nid007646' '--master_port=37593' 'src/train_robot.py' '--config' 'configs/training/libero_unified/gam/chunk8_150k_2node.yaml' '--results-dir' '/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/long_12gpu_3278593/results' '--set' 'training.max_steps=1100' '--set' 'training.log_every=10' '--set' 'training.ckpt_every=999999' '--set' 'training.vis_every=999999' '--set' 'training.global_batch_size=48' '--set' 'training.micro_batch_size=2' '--set' 'training.grad_accum_steps=2' '--set' 'dataset.eval_ratio=0' '--set' 'training.min_train_batches_per_epoch=200' '--set' 'predictor.clip_model=/iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14' "
+}
+

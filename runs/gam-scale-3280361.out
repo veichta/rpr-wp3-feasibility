@@ -1,0 +1,85 @@
+job 3280361 nodes 1 gpus 4 micro 1 accum 12 steps 200 config configs/training/libero_unified/gam/chunk8_150k_2node.yaml ds 1 extra --set da3_finetune.freeze_blocks_before=0 --set da3_finetune.n_views=3 --set dataset.n_views=3 --set dataset.repeat_missing_views=true --set dataset.future_steps=15 --set predictor.H_choices=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] --set predictor.H_weights=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] --set dataset.uniform_action_sampling=true --set regularization.lambda_point=1.0 --set predictor.deep_gradient_checkpointing=true
+0: [rank0]: Traceback (most recent call last):
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank0]:     main(parser.parse_args())
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank0]:     run_da3_finetune_training(args, cfg)
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 303, in run_da3_finetune_training
+0: [rank0]:     n_views = _resolve_da3_n_views(dataset_cfg, da3_ft_cfg)
+0: [rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/model.py", line 140, in resolve_da3_n_views
+0: [rank0]:     raise ValueError(f"View-count config mismatch: {details}.")
+0: [rank0]: ValueError: View-count config mismatch: da3_finetune.n_views=3, dataset.n_views=3, len(dataset.camera_keys)=2.
+0: [rank2]: Traceback (most recent call last):
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank2]:     main(parser.parse_args())
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank2]:     run_da3_finetune_training(args, cfg)
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 303, in run_da3_finetune_training
+0: [rank2]:     n_views = _resolve_da3_n_views(dataset_cfg, da3_ft_cfg)
+0: [rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/model.py", line 140, in resolve_da3_n_views
+0: [rank2]:     raise ValueError(f"View-count config mismatch: {details}.")
+0: [rank2]: ValueError: View-count config mismatch: da3_finetune.n_views=3, dataset.n_views=3, len(dataset.camera_keys)=2.
+0: [rank1]: Traceback (most recent call last):
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank1]:     main(parser.parse_args())
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank1]:     run_da3_finetune_training(args, cfg)
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 303, in run_da3_finetune_training
+0: [rank1]:     n_views = _resolve_da3_n_views(dataset_cfg, da3_ft_cfg)
+0: [rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/model.py", line 140, in resolve_da3_n_views
+0: [rank1]:     raise ValueError(f"View-count config mismatch: {details}.")
+0: [rank1]: ValueError: View-count config mismatch: da3_finetune.n_views=3, dataset.n_views=3, len(dataset.camera_keys)=2.
+0: [rank3]: Traceback (most recent call last):
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank3]:     main(parser.parse_args())
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank3]:     run_da3_finetune_training(args, cfg)
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 303, in run_da3_finetune_training
+0: [rank3]:     n_views = _resolve_da3_n_views(dataset_cfg, da3_ft_cfg)
+0: [rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/model.py", line 140, in resolve_da3_n_views
+0: [rank3]:     raise ValueError(f"View-count config mismatch: {details}.")
+0: [rank3]: ValueError: View-count config mismatch: da3_finetune.n_views=3, dataset.n_views=3, len(dataset.camera_keys)=2.
+0: [rank0]:[W903 16:14:55.690195570 ProcessGroupNCCL.cpp:1497] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: W0903 16:14:56.032000 182153 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 182204 closing signal SIGTERM
+0: W0903 16:14:56.033000 182153 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 182205 closing signal SIGTERM
+0: W0903 16:14:56.034000 182153 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 182206 closing signal SIGTERM
+0: E0903 16:14:56.412000 182153 torch/distributed/elastic/multiprocessing/api.py:870] failed (exitcode: 1) local_rank: 3 (pid: 182207) of binary: /iopsstor/scratch/cscs/veichta/rpr-wp3/env/gam-venv/bin/python
+0: Traceback (most recent call last):
+0:   File "<frozen runpy>", line 198, in _run_module_as_main
+0:   File "<frozen runpy>", line 88, in _run_code
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 893, in <module>
+0:     main()
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+0:     return f(*args, **kwargs)
+0:            ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 889, in main
+0:     run(args)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 880, in run
+0:     elastic_launch(
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 139, in __call__
+0:     return launch_agent(self._config, self._entrypoint, list(args))
+0:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+0:     raise ChildFailedError(
+0: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+0: ============================================================
+0: src/train_robot.py FAILED
+0: ------------------------------------------------------------
+0: Failures:
+0:   <NO_OTHER_FAILURES>
+0: ------------------------------------------------------------
+0: Root Cause (first observed failure):
+0: [0]:
+0:   time      : 2026-09-03_16:14:56
+0:   host      : nid007657
+0:   rank      : 3 (local_rank: 3)
+0:   exitcode  : 1 (pid: 182207)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: ============================================================
+0: Saved PDF report to /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280361/gssr_3280361.pdf
+0: pdf /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280361/gssr_3280361.pdf

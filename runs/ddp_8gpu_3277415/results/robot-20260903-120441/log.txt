@@ -1,0 +1,56 @@
+Config: configs/training/libero_unified/gam/chunk8_150k_2node.yaml
+Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/ddp_8gpu_3277415/results/robot-20260903-120441
+Distributed process-group timeout: 120.0 minutes
+Installed training preemption signal handlers: SIGUSR1, SIGTERM
+Slurm walltime guard: remaining=1146s preemption_guard=600s closed_loop_guard=1800s
+Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+bf16=True, compile=False, world_size=8
+DA3 fine-tune views: n_views=2 camera_keys=['agentview_rgb', 'eye_in_hand_rgb'] rollout_camera_keys=None
+Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+Stage 1 backbone: type=da3 embed_dim=1536 patches/view=256 registers=0 freeze_before=13
+ActionHeadV2: chunk_size=8 chunk_position_encoding=learned
+Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=False, predictor_gradient_checkpointing=False, backbone_deep_gradient_checkpointing=False, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+FuturePredictor trainable params: 260.6M
+Student DA3 + head + predictor trainable params: 1033.5M
+Unified DA3 GT depth loss enabled: type=da3_style lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=0.0000 lambda_point=0.0000 lambda_camera_pose=0.0000
+Unified GT depth decode chunk size: 1
+Unified GT depth decode context: full_sequence future_steps=0
+Wrapped model in DDP (world_size=8)
+Optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+Schedule: cosine decay, warmup=500 steps, max=150 steps, min_lr_ratio=0.010
+DDP gradient accumulation: grad_accum_steps=2 no_sync_non_boundary=True
+Skipping eval dataset build (eval_every=999999)
+Syncing action-stats-dir-create normalizer stats across 8 ranks
+Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+Action normalizer stats keys: ['libero_hdf5']
+Syncing proprio-stats-dir-create normalizer stats across 8 ranks
+Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+Proprio normalizer stats keys: ['libero_hdf5']
+Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+======================================================================
+TRAINING CONFIGURATION
+======================================================================
+  target_hz: None
+  libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=8  chunk=8  labels/sample=64  effective=20.0Hz  max_stride=1
+  action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+  action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+  action_head chunk_position_encoding: learned
+  samples=4800  batch=3  epochs=500000  batches/epoch=200
+======================================================================
+[step=0000010] total=3.5723 action_l1=0.9003 feat=0.8394 depth=0.6386 ray=0.0000 point=0.0000 rel@1/5/10=0.000/0.095/0.274 mse=0.19440 s/step=3.5 lr=1.0e-06/1.0e-05
+[step=0000020] total=2.8626 action_l1=0.6634 feat=0.8397 depth=0.6512 ray=0.0000 point=0.0000 rel@1/5/10=0.060/0.158/0.318 mse=0.16778 s/step=1.6 lr=2.0e-06/2.0e-05
+[step=0000030] total=2.4464 action_l1=0.5251 feat=0.8397 depth=0.6268 ray=0.0000 point=0.0000 rel@1/5/10=0.054/0.268/0.500 mse=0.13626 s/step=1.4 lr=3.0e-06/3.0e-05
+[step=0000040] total=2.3367 action_l1=0.4887 feat=0.8392 depth=0.6296 ray=0.0000 point=0.0000 rel@1/5/10=0.101/0.411/0.613 mse=0.10473 s/step=1.7 lr=4.0e-06/4.0e-05
+[step=0000050] total=2.3487 action_l1=0.4932 feat=0.8387 depth=0.6063 ray=0.0000 point=0.0000 rel@1/5/10=0.030/0.185/0.411 mse=0.14499 s/step=1.2 lr=5.0e-06/5.0e-05
+[step=0000060] total=2.3861 action_l1=0.5058 feat=0.8382 depth=0.6085 ray=0.0000 point=0.0000 rel@1/5/10=0.061/0.307/0.557 mse=0.09303 s/step=1.5 lr=6.0e-06/6.0e-05
+[step=0000070] total=2.3301 action_l1=0.4872 feat=0.8376 depth=0.6193 ray=0.0000 point=0.0000 rel@1/5/10=0.056/0.294/0.534 mse=0.09370 s/step=1.8 lr=7.0e-06/7.0e-05
+[step=0000080] total=2.3575 action_l1=0.4965 feat=0.8373 depth=0.6167 ray=0.0000 point=0.0000 rel@1/5/10=0.068/0.349/0.548 mse=0.09621 s/step=1.7 lr=8.0e-06/8.0e-05
+[step=0000090] total=2.4765 action_l1=0.5370 feat=0.8351 depth=0.6065 ray=0.0000 point=0.0000 rel@1/5/10=0.092/0.429/0.688 mse=0.07175 s/step=1.6 lr=9.0e-06/9.0e-05
+[step=0000100] total=2.4166 action_l1=0.5171 feat=0.8346 depth=0.6115 ray=0.0000 point=0.0000 rel@1/5/10=0.082/0.342/0.598 mse=0.05645 s/step=1.7 lr=1.0e-05/1.0e-04
+[step=0000110] total=2.3340 action_l1=0.4906 feat=0.8330 depth=0.5822 ray=0.0000 point=0.0000 rel@1/5/10=0.060/0.312/0.537 mse=0.08718 s/step=2.0 lr=1.1e-05/1.1e-04
+[step=0000120] total=2.3398 action_l1=0.4931 feat=0.8319 depth=0.5698 ray=0.0000 point=0.0000 rel@1/5/10=0.046/0.254/0.488 mse=0.10843 s/step=1.7 lr=1.2e-05/1.2e-04
+[step=0000130] total=2.2194 action_l1=0.4533 feat=0.8293 depth=0.6046 ray=0.0000 point=0.0000 rel@1/5/10=0.075/0.341/0.568 mse=0.07030 s/step=1.7 lr=1.3e-05/1.3e-04
+[step=0000140] total=2.2946 action_l1=0.4791 feat=0.8273 depth=0.6001 ray=0.0000 point=0.0000 rel@1/5/10=0.092/0.458/0.777 mse=0.04101 s/step=1.5 lr=1.4e-05/1.4e-04
+[step=0000150] total=2.1151 action_l1=0.4207 feat=0.8249 depth=0.5608 ray=0.0000 point=0.0000 rel@1/5/10=0.103/0.496/0.754 mse=0.04113 s/step=1.9 lr=1.5e-05/1.5e-04
+Training complete.

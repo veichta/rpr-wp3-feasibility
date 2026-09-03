@@ -1,0 +1,321 @@
+job 3280377 nodes 1 gpus 4 micro 1 accum 12 steps 200 config configs/training/libero_unified/gam/chunk8_150k_2node.yaml ds 1 extra --set da3_finetune.freeze_blocks_before=0 --set da3_finetune.n_views=3 --set dataset.n_views=3 --set dataset.camera_keys=[agentview_rgb,eye_in_hand_rgb,agentview_rgb] --set dataset.future_steps=15 --set da3_finetune.n_action_steps=16 --set predictor.H_choices=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] --set predictor.H_weights=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] --set dataset.uniform_action_sampling=true --set regularization.lambda_point=1.0 --set predictor.deep_gradient_checkpointing=true
+0: Config: configs/training/libero_unified/gam/chunk8_150k_2node.yaml
+0: Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280377/results/robot-20260903-161908
+0: Distributed process-group timeout: 120.0 minutes
+0: Installed training preemption signal handlers: SIGUSR1, SIGTERM
+0: Slurm walltime guard: remaining=561s preemption_guard=90s closed_loop_guard=1800s
+0: Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+0: DeepSpeed batch config OK: micro_batch=1, grad_accum=12, world_size=4
+0: bf16=True, compile=False, world_size=4
+0: DA3 fine-tune views: n_views=3 camera_keys=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] rollout_camera_keys=None
+0: Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+0: Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m[93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: 
+0: 
+0: [93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: [93m[WARN ] Dependency 'e3nn' not found. Required for rotating the camera space SH coeff[0m
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: [97m[INFO ] using SwiGLU layer as FFN[0m
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: Stage 1 backbone: type=da3 embed_dim=1536 patches/view=256 registers=0 freeze_before=0
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: ActionHeadV2: chunk_size=8 chunk_position_encoding=learned
+0: Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=True, predictor_gradient_checkpointing=True, backbone_deep_gradient_checkpointing=True, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+0: DA3 da3-giant loaded: 977 keys, missing=0, unexpected=0
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2228.55it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 2109.06it/s]
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bia
+0: s                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_mode
+0: l.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | 
+0: [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mU
+0: NEXPECTED:[0m	[3mcan be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 9141.68it/s]
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{
+0: 0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.weight                               | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: Loading weights:   0%|          | 0/196 [00:00<?, ?it/s]
+0: Loading weights: 100%|██████████| 196/196 [00:00<00:00, 6954.43it/s]
+0: [1mCLIPTextModel LOAD REPORT[0m from: /iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14
+0: Key                                                            | Status     |  | 
+0: ---------------------------------------------------------------+------------+--+-
+0: vision_model.encoder.layers.{0...23}.layer_norm1.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm1.bias          | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.weight        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.bias              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.layer_norm2.bias          | [38;5;
+0: 208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.q_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.weight                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.bias   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.k_proj.weight   | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.out_proj.weight | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc1.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.mlp.fc2.weight            | [38;5;208mUNEXPECTED[0m |  | 
+0: text_projection.weight                                         | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.encoder.layers.{0...23}.self_attn.v_proj.bias     | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.wei
+0: ght                               | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.pre_layrnorm.bias                                 | [38;5;208mUNEXPECTED[0m |  | 
+0: visual_projection.weight                                       | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_ids                           | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.class_embedding                        | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.position_embedding.weight              | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.embeddings.patch_embedding.weight                 | [38;5;208mUNEXPECTED[0m |  | 
+0: text_model.embeddings.position_ids                             | [38;5;208mUNEXPECTED[0m |  | 
+0: vision_model.post_layernorm.bias                               | [38;5;208mUNEXPECTED[0m |  | 
+0: logit_scale                                                    | [38;5;208mUNEXPECTED[0m |  | 
+0: 
+0: Notes:
+0: - [38;5;208mUNEXPECTED:[0m	[3mcan be ignored when loading from different
+0:  task/architecture; not ok if you expect identical arch.[0m
+0: FuturePredictor trainable params: 260.6M
+0: Student DA3 + head + predictor trainable params: 1401.9M
+0: Unified DA3 GT depth loss enabled: type=da3_style lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=0.0000 lambda_point=1.0000 lambda_camera_pose=0.0000
+0: Unified GT depth decode chunk size: 1
+0: Unified GT depth decode context: full_sequence future_steps=0
+0: Schedule: cosine decay, warmup=500 steps, max=200 steps, min_lr_ratio=0.010
+0: LiberoHDF5SequenceDataset [train]: 0 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] uniform_action_sampling=True hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=off noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: DeepSpeed optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+0: DDP gradient accumulation: grad_accum_steps=12 no_sync_non_boundary=False
+0: [rank2]: Traceback (most recent call last):
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank2]:     main(parser.parse_args())
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank2]:     run_da3_finetune_training(args, cfg)
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 1103, in run_da3_finetune_training
+0: [rank2]:     dataset, sampler, loader = create_dataset_and_loader(
+0: [rank2]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 525, in create_dataset_and_loader
+0: [rank2]:     dataset = _maybe_virtualize_train_epoch(dataset, training_cfg, world_size, rank)
+0: [rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 4
+0: 47, in _maybe_virtualize_train_epoch
+0: [rank2]:     wrapped = VirtualEpochDataset(dataset, target_len)
+0: [rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 415, in __init__
+0: [rank2]:     raise ValueError("Cannot virtualize an empty dataset.")
+0: [rank2]: ValueError: Cannot virtualize an empty dataset.
+0: LiberoHDF5SequenceDataset [train]: 0 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] uniform_action_sampling=True hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=off noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: Dataset build [train] size=0 elapsed=0.0s max_episodes=None eval_max_episodes=None batch_size=1
+0: [rank0]: Traceback (most recent call last):
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank0]:     main(parser.parse_args())
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank0]:     run_da3_finetune_training(args, cfg)
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 1103, in run_da3_finetune_training
+0: [rank0]:     dataset, sampler, loader = create_dataset_and_loader(
+0: [rank0]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 525, in create_dataset_and_loader
+0: [rank0]:     dataset = _maybe_virtualize_train_epoch(dataset, training_cfg, world_size, rank)
+0: [rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 4
+0: 47, in _maybe_virtualize_train_epoch
+0: [rank0]:     wrapped = VirtualEpochDataset(dataset, target_len)
+0: [rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 415, in __init__
+0: [rank0]:     raise ValueError("Cannot virtualize an empty dataset.")
+0: [rank0]: ValueError: Cannot virtualize an empty dataset.
+0: LiberoHDF5SequenceDataset [train]: 0 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] uniform_action_sampling=True hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=off noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: [rank1]: Traceback (most recent call last):
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank1]:     main(parser.parse_args())
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank1]:     run_da3_finetune_training(args, cfg)
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 1103, in run_da3_finetune_training
+0: [rank1]:     dataset, sampler, loader = create_dataset_and_loader(
+0: [rank1]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 525, in create_dataset_and_loader
+0: [rank1]:     dataset = _maybe_virtualize_train_epoch(dataset, training_cfg, world_size, rank)
+0: [rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 4
+0: 47, in _maybe_virtualize_train_epoch
+0: [rank1]:     wrapped = VirtualEpochDataset(dataset, target_len)
+0: [rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 415, in __init__
+0: [rank1]:     raise ValueError("Cannot virtualize an empty dataset.")
+0: [rank1]: ValueError: Cannot virtualize an empty dataset.
+0: LiberoHDF5SequenceDataset [train]: 0 samples from 1 files fps=20.0->20.00Hz chunk_size=8 random_stride=False cameras=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] uniform_action_sampling=True hdf5_mask=off da3_input_rotate180=True da3_input_hflip=True da3_input_vflip=False gt_depth_rotate180=True gt_depth_hflip=True gt_depth_vflip=False gt_depth=off noop_filter=off action_frame=base proprio_orientation=axis_angle openpi_libero_augment=False image_aug_profile=legacy jpeg_train=False@q95 jpeg_eval=False@q95
+0: [rank3]: Traceback (most recent call last):
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank3]:     main(parser.parse_args())
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank3]:     run_da3_finetune_training(args, cfg)
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 1103, in run_da3_finetune_training
+0: [rank3]:     dataset, sampler, loader = create_dataset_and_loader(
+0: [rank3]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 525, in create_dataset_and_loader
+0: [rank3]:     dataset = _maybe_virtualize_train_epoch(dataset, training_cfg, world_size, rank)
+0: [rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 4
+0: 47, in _maybe_virtualize_train_epoch
+0: [rank3]:     wrapped = VirtualEpochDataset(dataset, target_len)
+0: [rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/gam/training/data.py", line 415, in __init__
+0: [rank3]:     raise ValueError("Cannot virtualize an empty dataset.")
+0: [rank3]: ValueError: Cannot virtualize an empty dataset.
+0: [rank0]:[W903 16:19:30.267528580 ProcessGroupNCCL.cpp:1497] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: W0903 16:19:31.751000 256292 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 256334 closing signal SIGTERM
+0: W0903 16:19:31.752000 256292 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 256335 closing signal SIGTERM
+0: W0903 16:19:31.752000 256292 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 256337 closing signal SIGTERM
+0: E0903 16:19:32.131000 256292 torch/distributed/elastic/multiprocessing/api.py:870] failed (exitcode: 1) local_rank: 2 (pid: 256336) of binary: /iopsstor/scratch/cscs/veichta/rpr-wp3/env/gam-venv/bin/python
+0: Traceback (most recent call last):
+0:   File "<frozen runpy>", line 198, in _run_module_as_main
+0:   File "<frozen runpy>", line 88, in _run_code
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 893, in <module>
+0:     main()
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+0:     return f(*args, **kwargs)
+0:            ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 889, in main
+0:     run(args)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 880, in run
+0:     elastic_launch(
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 139, in __call__
+0:     return launch_agent(self._config, self._entrypoint, list(args))
+0:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+0:     raise ChildFailedError(
+0: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+0: ============================================================
+0: src/train_robot.py FAILED
+0: ------------------------------------------------------------
+0: Failures:
+0:   <NO_OTHER_FAILURES>
+0: ------------------------------------------------------------
+0: Root Cause (first observed failure):
+0: [0]:
+0:   time      : 2026-09-03_16:19:31
+0:   host      : nid006139
+0:   rank      : 2 (local_rank: 2)
+0:   exitcode  : 1 (pid: 256336)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: ============================================================
+0: Saved PDF report to /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280377/gssr_3280377.pdf
+0: pdf /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280377/gssr_3280377.pdf

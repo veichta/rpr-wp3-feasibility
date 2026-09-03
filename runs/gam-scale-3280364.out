@@ -1,0 +1,74 @@
+job 3280364 nodes 1 gpus 4 micro 1 accum 12 steps 200 config configs/training/libero_unified/gam/chunk8_150k_2node.yaml ds 1 extra --set da3_finetune.freeze_blocks_before=0 --set da3_finetune.n_views=3 --set dataset.n_views=3 --set dataset.camera_keys=[agentview_rgb,eye_in_hand_rgb,agentview_rgb] --set dataset.future_steps=15 --set predictor.H_choices=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] --set predictor.H_weights=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] --set dataset.uniform_action_sampling=true --set regularization.lambda_point=1.0 --set predictor.deep_gradient_checkpointing=true
+0: [rank0]: Traceback (most recent call last):
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank0]:     main(parser.parse_args())
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank0]:     run_da3_finetune_training(args, cfg)
+0: [rank0]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 308, in run_da3_finetune_training
+0: [rank0]:     raise ValueError(
+0: [rank0]: ValueError: Config mismatch: n_action_steps=8, expected 16 from dataset.
+0: [rank3]: Traceback (most recent call last):
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank3]:     main(parser.parse_args())
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank3]:     run_da3_finetune_training(args, cfg)
+0: [rank3]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 308, in run_da3_finetune_training
+0: [rank3]:     raise ValueError(
+0: [rank3]: ValueError: Config mismatch: n_action_steps=8, expected 16 from dataset.
+0: [rank2]: Traceback (most recent call last):
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank2]:     main(parser.parse_args())
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank2]:     run_da3_finetune_training(args, cfg)
+0: [rank2]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 308, in run_da3_finetune_training
+0: [rank2]:     raise ValueError(
+0: [rank2]: ValueError: Config mismatch: n_action_steps=8, expected 16 from dataset.
+0: [rank1]: Traceback (most recent call last):
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0: [rank1]:     main(parser.parse_args())
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0: [rank1]:     run_da3_finetune_training(args, cfg)
+0: [rank1]:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 308, in run_da3_finetune_training
+0: [rank1]:     raise ValueError(
+0: [rank1]: ValueError: Config mismatch: n_action_steps=8, expected 16 from dataset.
+0: [rank0]:[W903 16:16:49.020735484 ProcessGroupNCCL.cpp:1497] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: W0903 16:16:50.298000 127793 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 127859 closing signal SIGTERM
+0: W0903 16:16:50.299000 127793 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 127860 closing signal SIGTERM
+0: W0903 16:16:50.300000 127793 torch/distributed/elastic/multiprocessing/api.py:898] Sending process 127861 closing signal SIGTERM
+0: E0903 16:16:50.642000 127793 torch/distributed/elastic/multiprocessing/api.py:870] failed (exitcode: 1) local_rank: 3 (pid: 127862) of binary: /iopsstor/scratch/cscs/veichta/rpr-wp3/env/gam-venv/bin/python
+0: Traceback (most recent call last):
+0:   File "<frozen runpy>", line 198, in _run_module_as_main
+0:   File "<frozen runpy>", line 88, in _run_code
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 893, in <module>
+0:     main()
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+0:     return f(*args, **kwargs)
+0:            ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 889, in main
+0:     run(args)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 880, in run
+0:     elastic_launch(
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 139, in __call__
+0:     return launch_agent(self._config, self._entrypoint, list(args))
+0:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+0:     raise ChildFailedError(
+0: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+0: ============================================================
+0: src/train_robot.py FAILED
+0: ------------------------------------------------------------
+0: Failures:
+0:   <NO_OTHER_FAILURES>
+0: ------------------------------------------------------------
+0: Root Cause (first observed failure):
+0: [0]:
+0:   time      : 2026-09-03_16:16:50
+0:   host      : nid006140
+0:   rank      : 3 (local_rank: 3)
+0:   exitcode  : 1 (pid: 127862)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: ============================================================
+0: 
+0: Saved PDF report to /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280364/gssr_3280364.pdf
+0: pdf /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280364/gssr_3280364.pdf

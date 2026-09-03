@@ -1,0 +1,91 @@
+Config: configs/training/libero_unified/gam/chunk8_150k_2node.yaml
+Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/fullft-zero2-mb1-518_4gpu_3280203/results/robot-20260903-155018
+Distributed process-group timeout: 120.0 minutes
+Installed training preemption signal handlers: SIGUSR1, SIGTERM
+Slurm walltime guard: remaining=572s preemption_guard=90s closed_loop_guard=1800s
+Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+DeepSpeed batch config OK: micro_batch=1, grad_accum=12, world_size=4
+bf16=True, compile=False, world_size=4
+DA3 fine-tune views: n_views=2 camera_keys=['agentview_rgb', 'eye_in_hand_rgb'] rollout_camera_keys=None
+Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+Stage 1 backbone: type=da3 embed_dim=1536 patches/view=1369 registers=0 freeze_before=0
+ActionHeadV2: chunk_size=8 chunk_position_encoding=learned
+Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=False, predictor_gradient_checkpointing=False, backbone_deep_gradient_checkpointing=False, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+FuturePredictor trainable params: 260.6M
+Student DA3 + head + predictor trainable params: 1401.9M
+Unified DA3 GT depth loss enabled: type=da3_style lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=0.0000 lambda_point=0.0000 lambda_camera_pose=0.0000
+Unified GT depth decode chunk size: 1
+Unified GT depth decode context: full_sequence future_steps=0
+Schedule: cosine decay, warmup=500 steps, max=250 steps, min_lr_ratio=0.010
+DeepSpeed optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+DDP gradient accumulation: grad_accum_steps=12 no_sync_non_boundary=False
+Skipping eval dataset build (eval_every=999999)
+Syncing action-stats-dir-create normalizer stats across 4 ranks
+Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+Action normalizer stats keys: ['libero_hdf5']
+Syncing proprio-stats-dir-create normalizer stats across 4 ranks
+Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+Proprio normalizer stats keys: ['libero_hdf5']
+Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+======================================================================
+TRAINING CONFIGURATION
+======================================================================
+  target_hz: None
+  libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=8  chunk=8  labels/sample=64  effective=20.0Hz  max_stride=1
+  action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+  action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+  action_head chunk_position_encoding: learned
+  samples=800  batch=1  epochs=500000  batches/epoch=200
+======================================================================
+[data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=10 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=15-15 frames=15-71
+[step=0000010] total=4.0686 action_l1=1.0699 feat=0.8269 depth=0.6425 ray=0.0000 point=0.0000 rel@1/5/10=0.036/0.137/0.271 mse=0.29753 s/step=3.168 lr=5.0e-11/5.0e-10
+[data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=20 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=27-27 frames=27-83
+[step=0000020] total=3.9876 action_l1=1.0430 feat=0.8263 depth=0.6452 ray=0.0000 point=0.0000 rel@1/5/10=0.023/0.173/0.288 mse=0.28345 s/step=1.545 lr=1.0e-07/1.0e-06
+[data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=30 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=4-4 frames=4-60
+[step=0000030] total=3.9551 action_l1=1.0324 feat=0.8261 depth=0.6361 ray=0.0000 point=0.0000 rel@1/5/10=0.000/0.071/0.188 mse=0.32097 s/step=1.071 lr=2.0e-07/2.0e-06
+[data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=23-23 frames=23-79
+[step=0000040] total=3.8137 action_l1=0.9851 feat=0.8262 depth=0.6427 ray=0.0000 point=0.0000 rel@1/5/10=0.030/0.149/0.250 mse=0.23502 s/step=1.243 lr=3.0e-07/3.0e-06
+[data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=50 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=4-4 frames=4-60
+[step=0000050] total=4.1411 action_l1=1.0944 feat=0.8259 depth=0.6426 ray=0.0000 point=0.0000 rel@1/5/10=0.039/0.176/0.327 mse=0.24593 s/step=1.402 lr=4.0e-07/4.0e-06
+[data-wait step=0000060 rank=0] wait=0.00s threshold=20.00s epoch_batch=60 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=28-28 frames=28-84
+[step=0000060] total=4.0301 action_l1=1.0577 feat=0.8255 depth=0.6322 ray=0.0000 point=0.0000 rel@1/5/10=0.036/0.143/0.304 mse=0.43781 s/step=1.293 lr=5.0e-07/5.0e-06
+[data-wait step=0000070 rank=0] wait=0.00s threshold=20.00s epoch_batch=70 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=33-33 frames=33-89
+[step=0000070] total=3.8465 action_l1=0.9961 feat=0.8263 depth=0.6393 ray=0.0000 point=0.0000 rel@1/5/10=0.045/0.286/0.518 mse=0.16344 s/step=1.298 lr=5.0e-07/5.0e-06
+[data-wait step=0000080 rank=0] wait=0.00s threshold=20.00s epoch_batch=80 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=33-33 frames=33-89
+[step=0000080] total=3.7197 action_l1=0.9538 feat=0.8263 depth=0.6424 ray=0.0000 point=0.0000 rel@1/5/10=0.071/0.250/0.464 mse=0.21817 s/step=1.384 lr=6.0e-07/6.0e-06
+[data-wait step=0000090 rank=0] wait=0.00s threshold=20.00s epoch_batch=90 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=5-5 frames=5-61
+[step=0000090] total=3.5438 action_l1=0.8952 feat=0.8265 depth=0.6343 ray=0.0000 point=0.0000 rel@1/5/10=0.036/0.214/0.357 mse=0.18575 s/step=1.218 lr=7.0e-07/7.0e-06
+[data-wait step=0000100 rank=0] wait=0.00s threshold=20.00s epoch_batch=100 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=28-28 frames=28-84
+[step=0000100] total=3.5748 action_l1=0.9053 feat=0.8270 depth=0.6386 ray=0.0000 point=0.0000 rel@1/5/10=0.018/0.107/0.304 mse=0.34261 s/step=1.440 lr=8.0e-07/8.0e-06
+[data-wait step=0000110 rank=0] wait=0.00s threshold=20.00s epoch_batch=110 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=19-19 frames=19-75
+[step=0000110] total=3.4985 action_l1=0.8802 feat=0.8259 depth=0.6401 ray=0.0000 point=0.0000 rel@1/5/10=0.009/0.085/0.174 mse=0.38902 s/step=1.316 lr=9.0e-07/9.0e-06
+[data-wait step=0000120 rank=0] wait=0.00s threshold=20.00s epoch_batch=120 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=27-27 frames=27-83
+[step=0000120] total=3.3805 action_l1=0.8407 feat=0.8263 depth=0.6405 ray=0.0000 point=0.0000 rel@1/5/10=0.009/0.098/0.196 mse=0.32758 s/step=1.185 lr=1.0e-06/1.0e-05
+[data-wait step=0000130 rank=0] wait=0.00s threshold=20.00s epoch_batch=130 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=17-17 frames=17-73
+[step=0000130] total=3.5543 action_l1=0.8985 feat=0.8266 depth=0.6425 ray=0.0000 point=0.0000 rel@1/5/10=0.025/0.125/0.229 mse=0.45815 s/step=1.486 lr=1.0e-06/1.0e-05
+[data-wait step=0000140 rank=0] wait=0.00s threshold=20.00s epoch_batch=140 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=7-7 frames=7-63
+[step=0000140] total=3.5794 action_l1=0.9071 feat=0.8259 depth=0.6466 ray=0.0000 point=0.0000 rel@1/5/10=0.012/0.119/0.292 mse=0.25477 s/step=1.478 lr=1.1e-06/1.1e-05
+[data-wait step=0000150 rank=0] wait=0.00s threshold=20.00s epoch_batch=150 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=14-14 frames=14-70
+[step=0000150] total=3.6662 action_l1=0.9360 feat=0.8262 depth=0.6432 ray=0.0000 point=0.0000 rel@1/5/10=0.022/0.062/0.250 mse=0.33320 s/step=1.218 lr=1.2e-06/1.2e-05
+[data-wait step=0000160 rank=0] wait=0.00s threshold=20.00s epoch_batch=160 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=4-4 frames=4-60
+[step=0000160] total=3.7605 action_l1=0.9673 feat=0.8263 depth=0.6433 ray=0.0000 point=0.0000 rel@1/5/10=0.071/0.188/0.384 mse=0.35800 s/step=1.724 lr=1.3e-06/1.3e-05
+[data-wait step=0000170 rank=0] wait=0.00s threshold=20.00s epoch_batch=170 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=13-13 frames=13-69
+[step=0000170] total=3.9585 action_l1=1.0337 feat=0.8254 depth=0.6378 ray=0.0000 point=0.0000 rel@1/5/10=0.046/0.212/0.390 mse=0.54255 s/step=1.378 lr=1.4e-06/1.4e-05
+[data-wait step=0000180 rank=0] wait=0.00s threshold=20.00s epoch_batch=180 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=29-29 frames=29-85
+[step=0000180] total=4.0658 action_l1=1.0688 feat=0.8266 depth=0.6565 ray=0.0000 point=0.0000 rel@1/5/10=0.018/0.179/0.402 mse=0.35197 s/step=1.336 lr=1.5e-06/1.5e-05
+[data-wait step=0000190 rank=0] wait=0.00s threshold=20.00s epoch_batch=190 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=23-23 frames=23-79
+[step=0000190] total=3.9211 action_l1=1.0210 feat=0.8260 depth=0.6416 ray=0.0000 point=0.0000 rel@1/5/10=0.065/0.292/0.435 mse=0.43742 s/step=1.361 lr=1.5e-06/1.5e-05
+[data-wait step=0000200 rank=0] wait=0.00s threshold=20.00s epoch_batch=200 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=18-18 frames=18-74
+[step=0000200] total=3.6621 action_l1=0.9341 feat=0.8271 depth=0.6524 ray=0.0000 point=0.0000 rel@1/5/10=0.067/0.290/0.571 mse=0.14799 s/step=1.539 lr=1.6e-06/1.6e-05
+[data-wait step=0000210 rank=0] wait=0.00s threshold=20.00s epoch_batch=10 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=11-11 frames=11-67
+[step=0000210] total=3.6157 action_l1=0.9195 feat=0.8258 depth=0.6318 ray=0.0000 point=0.0000 rel@1/5/10=0.098/0.268/0.464 mse=0.09278 s/step=1.554 lr=1.7e-06/1.7e-05
+[data-wait step=0000220 rank=0] wait=0.00s threshold=20.00s epoch_batch=20 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=10-10 frames=10-66
+[step=0000220] total=3.3374 action_l1=0.8261 feat=0.8270 depth=0.6434 ray=0.0000 point=0.0000 rel@1/5/10=0.161/0.321/0.411 mse=0.11601 s/step=1.228 lr=1.8e-06/1.8e-05
+[data-wait step=0000230 rank=0] wait=0.00s threshold=20.00s epoch_batch=30 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=0-0 frames=0-56
+[step=0000230] total=3.1263 action_l1=0.7565 feat=0.8253 depth=0.6311 ray=0.0000 point=0.0000 rel@1/5/10=0.089/0.304/0.536 mse=0.19653 s/step=1.535 lr=1.9e-06/1.9e-05
+[data-wait step=0000240 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=15-15 frames=15-71
+[step=0000240] total=3.0004 action_l1=0.7140 feat=0.8264 depth=0.6414 ray=0.0000 point=0.0000 rel@1/5/10=0.125/0.339/0.482 mse=0.13654 s/step=1.422 lr=2.0e-06/2.0e-05
+[data-wait step=0000250 rank=0] wait=0.00s threshold=20.00s epoch_batch=50 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=2:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb:1 episodes=0-0 start_t=14-14 frames=14-70
+[step=0000250] total=2.8753 action_l1=0.6720 feat=0.8269 depth=0.6503 ray=0.0000 point=0.0000 rel@1/5/10=0.071/0.339/0.607 mse=0.13010 s/step=1.573 lr=2.0e-06/2.0e-05
+Training complete.

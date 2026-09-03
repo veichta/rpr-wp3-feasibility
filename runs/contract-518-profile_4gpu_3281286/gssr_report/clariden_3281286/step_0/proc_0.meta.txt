@@ -1,0 +1,15 @@
+{
+    "gssr-record-version": "2.0",
+    "date": "2026-09-03T17:44:14+0200",
+    "cluster": "clariden",
+    "jobid": "3281286",
+    "jobname": "gam-scale",
+    "nnodes": "1",
+    "ntasks": "1",
+    "ngpus": "4",
+    "step_nnodes": "1",
+    "step_ntasks": "1",
+    "executable": "python",
+    "arguments": "'-m' 'torch.distributed.run' '--nproc_per_node=4' '--nnodes=1' '--node_rank=0' '--master_addr=nid007278' '--master_port=30286' 'src/train_robot.py' '--config' '/iopsstor/scratch/cscs/veichta/rpr-wp3/configs/wp31_contract_518.yaml' '--deepspeed_config' '/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-518-profile_4gpu_3281286/deepspeed.json' '--results-dir' '/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-518-profile_4gpu_3281286/results' '--set' 'training.max_steps=60' '--set' 'training.global_batch_size=16' '--set' 'training.micro_batch_size=1' '--set' 'training.grad_accum_steps=4' "
+}
+

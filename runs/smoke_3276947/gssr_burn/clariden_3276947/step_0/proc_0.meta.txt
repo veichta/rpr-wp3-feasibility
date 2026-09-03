@@ -1,0 +1,15 @@
+{
+    "gssr-record-version": "2.0",
+    "date": "2026-09-03T11:38:52+0200",
+    "cluster": "clariden",
+    "jobid": "3276947",
+    "jobname": "gam-smoke",
+    "nnodes": "1",
+    "ntasks": "1",
+    "ngpus": "4",
+    "step_nnodes": "1",
+    "step_ntasks": "1",
+    "executable": "python",
+    "arguments": "'/iopsstor/scratch/cscs/veichta/rpr-wp3/scripts/gpu_burn.py' "
+}
+

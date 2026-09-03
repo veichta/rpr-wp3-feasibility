@@ -1,0 +1,15 @@
+{
+    "gssr-record-version": "2.0",
+    "date": "2026-09-03T16:15:34+0200",
+    "cluster": "clariden",
+    "jobid": "3280364",
+    "jobname": "gam-scale",
+    "nnodes": "1",
+    "ntasks": "1",
+    "ngpus": "4",
+    "step_nnodes": "1",
+    "step_ntasks": "1",
+    "executable": "python",
+    "arguments": "'-m' 'torch.distributed.run' '--nproc_per_node=4' '--nnodes=1' '--node_rank=0' '--master_addr=nid006140' '--master_port=29364' 'src/train_robot.py' '--config' 'configs/training/libero_unified/gam/chunk8_150k_2node.yaml' '--deepspeed_config' '/iopsstor/scratch/cscs/veichta/rpr-wp3/scripts/ds_micro1_accum12.json' '--results-dir' '/iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-224_4gpu_3280364/results' '--set' 'training.max_steps=200' '--set' 'training.log_every=10' '--set' 'training.ckpt_every=999999' '--set' 'training.vis_every=999999' '--set' 'training.global_batch_size=48' '--set' 'training.micro_batch_size=1' '--set' 'training.grad_accum_steps=12' '--set' 'dataset.eval_ratio=0' '--set' 'training.min_train_batches_per_epoch=200' '--set' 'predictor.clip_model=/iopsstor/scratch/cscs/veichta/rpr-wp3/assets/clip-vit-large-patch14' '--set' 'da3_finetune.freeze_blocks_before=0' '--set' 'da3_finetune.n_views=3' '--set' 'dataset.n_views=3' '--set' 'dataset.camera_keys=[agentview_rgb,eye_in_hand_rgb,agentview_rgb]' '--set' 'dataset.future_steps=15' '--set' 'predictor.H_choices=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]' '--set' 'predictor.H_weights=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]' '--set' 'dataset.uniform_action_sampling=true' '--set' 'regularization.lambda_point=1.0' '--set' 'predictor.deep_gradient_checkpointing=true' "
+}
+

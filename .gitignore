@@ -1,6 +1,8 @@
 code/
 assets/
-runs/
+# runs/ is tracked (slurm .out, GSSR PDFs + CSVs, configs, logs); only the huge profiler traces and checkpoints are not
+runs/**/trace_rank*.json
+runs/**/*.pt
 tools/
 env/gam-venv/
 env/gam-venv-freeze.txt

@@ -1,0 +1,55 @@
+Config: configs/training/libero_unified/gam/chunk8_150k_2node.yaml
+Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-518-accum4-compile_4gpu_3281016/results/robot-20260903-172418
+Distributed process-group timeout: 120.0 minutes
+Installed training preemption signal handlers: SIGUSR1, SIGTERM
+Slurm walltime guard: remaining=573s preemption_guard=90s closed_loop_guard=1800s
+Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+DeepSpeed batch config OK: micro_batch=1, grad_accum=4, world_size=4
+bf16=True, compile=True, world_size=4
+DA3 fine-tune views: n_views=3 camera_keys=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] rollout_camera_keys=None
+Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+Stage 1 backbone: type=da3 embed_dim=1536 patches/view=1369 registers=0 freeze_before=0
+ActionHeadV2: chunk_size=4 chunk_position_encoding=learned
+Unified mode ON: FuturePredictor type=gam, H_choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=True, predictor_gradient_checkpointing=True, backbone_deep_gradient_checkpointing=True, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+FuturePredictor trainable params: 260.5M
+Student DA3 + head + predictor trainable params: 1401.8M
+Unified DA3 GT depth loss enabled: type=da3_full lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=1.0000 lambda_point=1.0000 lambda_camera_pose=0.0000
+Unified GT depth decode chunk size: 16
+Unified GT depth decode context: full_sequence future_steps=0
+Compiling model with torch.compile (mode=default)...
+Schedule: cosine decay, warmup=500 steps, max=60 steps, min_lr_ratio=0.010
+DeepSpeed optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+DDP gradient accumulation: grad_accum_steps=4 no_sync_non_boundary=False
+Skipping eval dataset build (eval_every=999999)
+Syncing action-stats-dir-create normalizer stats across 4 ranks
+Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+Action normalizer stats keys: ['libero_hdf5']
+Syncing proprio-stats-dir-create normalizer stats across 4 ranks
+Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+Proprio normalizer stats keys: ['libero_hdf5']
+Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+======================================================================
+TRAINING CONFIGURATION
+======================================================================
+  target_hz: None
+  libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=4  chunk=4  labels/sample=64  effective=20.0Hz  max_stride=1
+  action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+  action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+  action_head chunk_position_encoding: learned
+  samples=800  batch=1  epochs=500000  batches/epoch=200
+======================================================================
+[data-wait step=0000010 rank=0] wait=0.00s threshold=20.00s epoch_batch=10 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=3:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb+agentview_rgb:1 episodes=0-0 start_t=1-1 frames=1-61
+[step=0000010] total=4.2413 action_l1=1.0964 feat=0.8250 depth=2.5423 ray=1.5121 point=0.3683 rel@1/5/10=0.026/0.094/0.186 mse=0.33043 s/step=10.943 lr=2.0e-07/2.0e-06
+[data-wait step=0000020 rank=0] wait=0.00s threshold=20.00s epoch_batch=20 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=3:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb+agentview_rgb:1 episodes=0-0 start_t=13-13 frames=13-73
+[step=0000020] total=4.1995 action_l1=1.0828 feat=0.8249 depth=2.5237 ray=1.4977 point=0.3663 rel@1/5/10=0.045/0.150/0.286 mse=0.25619 s/step=10.397 lr=5.0e-07/5.0e-06
+[data-wait step=0000030 rank=0] wait=0.00s threshold=20.00s epoch_batch=30 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=3:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb+agentview_rgb:1 episodes=0-0 start_t=23-23 frames=23-83
+[step=0000030] total=3.8860 action_l1=0.9748 feat=0.8248 depth=2.7353 ray=1.7393 point=0.3571 rel@1/5/10=0.036/0.221/0.307 mse=0.12877 s/step=7.816 lr=7.0e-07/7.0e-06
+[data-wait step=0000040 rank=0] wait=0.00s threshold=20.00s epoch_batch=40 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=3:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb+agentview_rgb:1 episodes=0-0 start_t=8-8 frames=8-68
+[step=0000040] total=3.4151 action_l1=0.8226 feat=0.8251 depth=2.4404 ray=1.4443 point=0.3580 rel@1/5/10=0.041/0.128/0.301 mse=0.21261 s/step=8.541 lr=1.0e-06/1.0e-05
+[data-wait step=0000050 rank=0] wait=0.00s threshold=20.00s epoch_batch=50 datasets=libero_hdf5:1 stats=libero_hdf5:1 views=3:1 valid=1.000 cameras=agentview_rgb+eye_in_hand_rgb+agentview_rgb:1 episodes=0-0 start_t=19-19 frames=19-79
+[step=0000050] total=3.3658 action_l1=0.7990 feat=0.8251 depth=2.8738 ray=1.8433 point=0.3695 rel@1/5/10=0.010/0.115/0.222 mse=0.43401 s/step=10.081 lr=1.2e-06/1.2e-05
+[step=0000050] walltime guard remaining=82s <= 90s; saving checkpoint and exiting cleanly before eval/next step
+Saved DeepSpeed checkpoint (walltime guard remaining=82s <= 90s): /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-518-accum4-compile_4gpu_3281016/results/robot-20260903-172418/checkpoints/tag=0000050
+Saved checkpoint (walltime guard remaining=82s <= 90s): /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/contract-518-accum4-compile_4gpu_3281016/results/robot-20260903-172418/checkpoints/0000050.pt
+Training complete (clean preemption exit).

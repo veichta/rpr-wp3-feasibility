@@ -1,0 +1,35 @@
+0: == gssr burn
+0: burn ok on 4 gpus
+0: == gssr analyze
+0: Saved PDF report to /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/smoke_3276947/gssr_burn.pdf
+0: -rw-r-----+ 1 veichta a144 80712 Sep  3 11:40 /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/smoke_3276947/gssr_burn.pdf
+0: == gam smoke 1 gpu
+0: Config: configs/training/libero_unified/smoke/gam_chunk2.yaml
+0: Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/smoke_3276947/results/robot-20260903-114204
+0: Distributed process-group timeout: 120.0 minutes
+0: Installed training preemption signal handlers: SIGUSR1, SIGTERM
+0: Slurm walltime guard: remaining=1100s preemption_guard=600s closed_loop_guard=1800s
+0: Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+0: bf16=True, compile=False, world_size=1
+0: DA3 fine-tune views: n_views=2 camera_keys=['agentview_rgb', 'eye_in_hand_rgb'] rollout_camera_keys=None
+0: Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+0: Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+0: Traceback (most recent call last):
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3822, in <module>
+0:     main(parser.parse_args())
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 3762, in main
+0:     run_da3_finetune_training(args, cfg)
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/train_robot.py", line 434, in run_da3_finetune_training
+0:     teacher_da3 = create_stage1_backbone(
+0:                   ^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/robot/modeling/backbone_factory.py", line 38, in create_stage1_backbone
+0:     return DA3GiantEncoder(
+0:            ^^^^^^^^^^^^^^^^
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/robot/modeling/da3_giant_encoder.py", line 246, in __init__
+0:     self.da3_model = self._load_full_model(ckpt_path, model_name=self.model_name)
+0:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/src/robot/modeling/da3_giant_encoder.py", line 341, in _load_full_model
+0:     from depth_anything_3.api import DepthAnything3
+0: ModuleNotFoundError: No module named 'depth_anything_3'
+srun: error: nid006644: task 0: Exited with exit code 1
+srun: Terminating StepId=3276947.0

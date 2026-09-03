@@ -82,7 +82,9 @@ stops and checkpoints that long before the SLURM limit). Startup (checkpoint + C
 init) takes ~2-3.5 min before the first step.
 
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
-queued job per user.
+queued job per user. Convention (2026-09-03): every measurement job is 20 min, the longest that fits
+all node counts on debug (4 nodes x 22 min cap); the debug docs forbid production-like workloads,
+so no hour-long runs there.
 
 ## Pull reports to the local mirror
 

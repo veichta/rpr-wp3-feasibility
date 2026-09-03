@@ -1,0 +1,54 @@
+Config: /iopsstor/scratch/cscs/veichta/rpr-wp3/configs/wp31_contract_448.yaml
+Experiment dir: /iopsstor/scratch/cscs/veichta/rpr-wp3/runs/ladder_16gpu_3283421/results/robot-20260903-221135
+Distributed process-group timeout: 120.0 minutes
+Installed training preemption signal handlers: SIGUSR1, SIGTERM
+Slurm walltime guard: remaining=1173s preemption_guard=90s closed_loop_guard=1800s
+Distributed periodic preemption signal check disabled; checkpoint/eval boundary checks remain enabled
+DeepSpeed batch config OK: micro_batch=1, grad_accum=3, world_size=16
+bf16=True, compile=True, world_size=16
+DA3 fine-tune views: n_views=3 camera_keys=['agentview_rgb', 'eye_in_hand_rgb', 'agentview_rgb'] rollout_camera_keys=None
+Stage 1 teacher checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth (student/bootstrap checkpoint: /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/checkpoints/track4world_da3.pth)
+Teacher and student/bootstrap Stage 1 checkpoints are identical; set stage_1.teacher_ckpt_path to keep the depth teacher pristine.
+Stage 1 backbone: type=da3 embed_dim=1536 patches/view=1024 registers=0 freeze_before=0
+ActionHeadV2: chunk_size=4 chunk_position_encoding=learned
+Unified mode ON: FuturePredictor type=gam, H_choices=[15], lambda_feat_future=1.0000, lambda_feat_current=0.0000, lambda_proprio_future=0.0000, lambda_sigreg=0.0000, lambda_action_direct=1.0000, lambda_action_refine=1.0000, use_language=True, deep_gradient_checkpointing=True, predictor_gradient_checkpointing=True, backbone_deep_gradient_checkpointing=True, deep_temporal_causal_mask=False, use_proprio_head=False, feature_loss_norm=none, feature_loss_type=l2, feature_target_mode=future
+FuturePredictor trainable params: 260.5M
+Student DA3 + head + predictor trainable params: 1401.8M
+Unified DA3 GT depth loss enabled: type=da3_full lambda_depth=0.0500 depth_grad_weight=1.0000 lambda_depth_conf=0.2000 lambda_ray=1.0000 lambda_point=1.0000 lambda_camera_pose=0.0000
+Unified GT depth decode chunk size: 16
+Unified GT depth decode context: full_sequence future_steps=0
+Compiling model with torch.compile (mode=default)...
+Schedule: cosine decay, warmup=500 steps, max=120 steps, min_lr_ratio=0.010
+DeepSpeed optimizer: backbone_lr=5.0e-05, head_lr=5.0e-04 (10x), predictor_lr=1.0e-05 (0.2x), wd=0.0000, adam_eps=1.0e-06, betas=(0.9000, 0.9990)
+DDP gradient accumulation: grad_accum_steps=3 no_sync_non_boundary=False
+Skipping eval dataset build (eval_every=999999)
+Syncing action-stats-dir-create normalizer stats across 16 ranks
+Loading action normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets (target_hz=None, per_ds_hz={'libero_hdf5': 20.0})
+Action normalizer stats keys: ['libero_hdf5']
+Syncing proprio-stats-dir-create normalizer stats across 16 ranks
+Loading proprio normalizer from /iopsstor/scratch/cscs/veichta/rpr-wp3/code/gam/data/libero_noop/_stats for 1 datasets
+Proprio normalizer stats keys: ['libero_hdf5']
+Action stats: libero_hdf5: mean=[0.19519999623298645, 0.0778999999165535, -0.18369999527931213, 0.007799999788403511, -0.0010999999940395355, -0.055399999022483826, 0.6625000238418579] std=[0.4471000134944916, 0.2110999971628189, 0.6069999933242798, 0.031199999153614044, 0.0714000016450882, 0.07109999656677246, 0.47279998660087585]
+======================================================================
+TRAINING CONFIGURATION
+======================================================================
+  target_hz: None
+  libero_hdf5                     native=20fps  action_stride=1  visual_anchor_stride=4  chunk=4  labels/sample=64  effective=20.0Hz  max_stride=1
+  action normalizer: 1 datasets, stats_keys=['libero_hdf5']
+  action normalizer unit: per policy action after action_stride aggregation; chunk_size groups multiple normalized 7D policy actions under one visual anchor.
+  action_head chunk_position_encoding: learned
+  samples=3200  batch=1  epochs=500000  batches/epoch=200
+======================================================================
+[step=0000010] total=5.0981 action_l1=1.2224 feat=0.8045 depth=12.5263 ray=7.1540 point=0.4055 rel@1/5/10=0.026/0.140/0.248 mse=0.48218 s/step=8.235 lr=3.0e-07/3.0e-06
+[step=0000020] total=4.9401 action_l1=1.1776 feat=0.8058 depth=12.0279 ray=7.1559 point=0.3929 rel@1/5/10=0.019/0.112/0.190 mse=0.44111 s/step=7.259 lr=6.0e-07/6.0e-06
+[step=0000030] total=4.1149 action_l1=0.8918 feat=0.8060 depth=12.6724 ray=7.6668 point=0.4021 rel@1/5/10=0.031/0.160/0.324 mse=0.22363 s/step=7.215 lr=1.0e-06/1.0e-05
+[step=0000040] total=3.8557 action_l1=0.8204 feat=0.8048 depth=11.7942 ray=6.8705 point=0.3959 rel@1/5/10=0.005/0.055/0.131 mse=1.02598 s/step=7.259 lr=1.3e-06/1.3e-05
+[step=0000050] total=5.6108 action_l1=1.4100 feat=0.8055 depth=11.5085 ray=6.8803 point=0.4047 rel@1/5/10=0.036/0.124/0.231 mse=1.29588 s/step=7.204 lr=1.6e-06/1.6e-05
+[step=0000060] total=4.8038 action_l1=1.1555 feat=0.8059 depth=10.6293 ray=6.2526 point=0.3987 rel@1/5/10=0.045/0.238/0.424 mse=0.43343 s/step=7.262 lr=2.0e-06/2.0e-05
+[step=0000070] total=3.3002 action_l1=0.6899 feat=0.8058 depth=8.4933 ray=4.6831 point=0.3984 rel@1/5/10=0.040/0.167/0.329 mse=0.21217 s/step=7.207 lr=2.3e-06/2.3e-05
+[step=0000080] total=2.6951 action_l1=0.5253 feat=0.8056 depth=6.2721 ray=3.1803 point=0.4021 rel@1/5/10=0.052/0.190/0.426 mse=0.29299 s/step=7.224 lr=2.6e-06/2.6e-05
+[step=0000090] total=2.4435 action_l1=0.4986 feat=0.8054 depth=2.8456 ray=1.1023 point=0.3937 rel@1/5/10=0.052/0.269/0.481 mse=0.09874 s/step=7.239 lr=3.0e-06/3.0e-05
+[step=0000100] total=2.2299 action_l1=0.4416 feat=0.8054 depth=1.9923 ray=0.7192 point=0.3812 rel@1/5/10=0.045/0.214/0.402 mse=0.13190 s/step=7.218 lr=3.3e-06/3.3e-05
+[step=0000110] total=2.1139 action_l1=0.4052 feat=0.8053 depth=1.8587 ray=0.6631 point=0.3694 rel@1/5/10=0.069/0.317/0.521 mse=0.08802 s/step=7.246 lr=3.6e-06/3.6e-05
+[step=0000120] total=1.9446 action_l1=0.3466 feat=0.8060 depth=1.9770 ray=0.6990 point=0.3742 rel@1/5/10=0.040/0.264/0.519 mse=0.11132 s/step=7.212 lr=4.0e-06/4.0e-05
+Training complete.

@@ -108,10 +108,10 @@ mean over steps >= 20, ZeRO-2, `configs/wp31_contract_448.yaml`, cached single-d
 | 12    | 3     | 4     | 7.214 (0.032)   | 0.139         | 1.66      | 98.7 %     | 3283394   | GPU start 93 %, GPU util 91-92 %, FP util 0.40 (all good), 468 W  |
 | 16    | 4     | 3     | 7.231 (0.021)   | 0.138         | 2.21      | 98.5 %     | 3283421   | GPU start 93 %, GPU util 91-92 %, FP util 0.40 (all good), 465 W  |
 
-Visual tokens per sample 49,152 -> 6.9k visual tokens/s/GPU at every point. The 16-GPU point runs
-accumulation 3; at 64 GPUs the same global batch needs no accumulation (48 = 64 x 1 would need
-global batch 64, i.e. one micro-batch per GPU), so the ladder measures the communication cost of
-the production layout directly.
+Visual tokens per sample 49,152 -> 6.9k visual tokens/s/GPU at every point. Accumulation only holds
+the global batch at 48 for the strong-scaling comparison; at the target scale (64 GPUs, micro 1)
+the natural global batch is 64 with no accumulation, and the 16-GPU point (accumulation 3) already
+shows the per-step gradient communication of that layout costs under 2 %.
 
 ## Data and I/O Requirements (WP3)
 

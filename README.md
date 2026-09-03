@@ -75,7 +75,8 @@ counts, 300 steps, torchrun DDP (add `DS=1` for DeepSpeed ZeRO-2). Throughput is
 field of the training log; each job also leaves a `gssr_report/` for `gssr-analyze`.
 
 Debug partition limits (a144 works there): max 4 nodes, 90 node-minutes per job, 1 running + 1
-queued job per user.
+queued job per user. GAM stops training and checkpoints when 600 s of SLURM walltime remain, so a
+20 min job yields ~6.5 min of steps after the ~3.5 min startup (checkpoint + CLIP load, NCCL init).
 
 ## Pull reports to the local mirror
 

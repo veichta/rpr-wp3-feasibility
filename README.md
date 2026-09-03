@@ -18,7 +18,7 @@ the Clariden root receives the tracked files by rsync (Clariden has no GitHub ke
 ```
 README.md            this file
 scripts/             setup.sh, env.sh, build_env.sh, check_env.py, gpu_burn.py, *.sbatch
-configs/             our GAM training yamls (wp31_contract_518.yaml = the WP3.1 production shape)
+configs/             our GAM training yamls (wp31_contract_448.yaml = the WP3.1 production shape; 518 variant kept)
 patches/             idempotent patches applied to the GAM tree by setup.sh (torch.profiler window; rank-synchronized H draw)
 env/gam.toml         container EDF (NGC PyTorch 25.03 + NCCL + DCGM hooks)
 env/gam-venv/        Python venv built inside the container (see Create env)
@@ -73,7 +73,7 @@ sbatch -N 1 --export=ALL,TAG=profile,DS=1,PROFILE=1        scripts/gam_scale.sba
 sbatch -N 1 --export=ALL,TAG=paper,CONFIG=$R/code/gam/configs/training/libero_unified/gam/chunk8_150k_2node.yaml,GLOBAL=48,MICRO=3 scripts/gam_scale.sbatch
 ```
 
-All model and data settings live in the yaml (`configs/wp31_contract_518.yaml` by default). The
+All model and data settings live in the yaml (`configs/wp31_contract_448.yaml` by default). The
 script sets only run length (`STEPS`), the batch layout (`GLOBAL` held fixed across node counts,
 `MICRO`, accumulation derived), the launcher (`DS=1` = DeepSpeed ZeRO-2 with a generated JSON,
 default torchrun DDP), profiling (`PROFILE=1` = GAM's phase timer every 10 steps plus a

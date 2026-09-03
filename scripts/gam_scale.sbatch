@@ -16,7 +16,7 @@
 #   PROFILE=1 = GAM phase timer + data-loader wait log every 10 steps + torch.profiler on micro-steps 30-35 (rank 0); off by default.
 set -eo pipefail
 source ${RPR_WP3_ROOT:-/iopsstor/scratch/cscs/veichta/rpr-wp3}/scripts/env.sh
-CONFIG=${CONFIG:-$R/configs/wp31_contract_518.yaml}
+CONFIG=${CONFIG:-$R/configs/wp31_contract_448.yaml}
 STEPS=${STEPS:-60}
 TAG=${TAG:-scale}
 MICRO=${MICRO:-1}

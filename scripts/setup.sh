@@ -22,7 +22,9 @@ fi
 ln -sfn ../Depth-Anything-3 $R/code/gam/Depth-Anything-3
 ln -sfn $R/assets/checkpoints $R/code/gam/checkpoints
 ln -sfn $R/assets/data $R/code/gam/data
-echo "code: gam $(git -C $R/code/gam rev-parse --short HEAD), da3 $(git -C $R/code/Depth-Anything-3 rev-parse --short HEAD)"
+# Local patch: GAM prints s/step with one decimal, too coarse at 16+ GPUs (0.7 s/step). Print three.
+sed -i "s#s/step=%.1f#s/step=%.3f#" $R/code/gam/src/train_robot.py
+echo "code: gam $(git -C $R/code/gam rev-parse --short HEAD) (+s/step %.3f patch), da3 $(git -C $R/code/Depth-Anything-3 rev-parse --short HEAD)"
 
 # --- assets (Hugging Face via plain curl; skips complete files, resumes partial ones) ---
 hf_get () {  # url -> local path
